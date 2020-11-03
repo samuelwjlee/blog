@@ -1,5 +1,5 @@
 # Blog
 A personal medium to share stories, insights, and knowledge.
 
-## Why start a blog?
-For thousands of years, people have been communicating through storytelling and it has been a potent method to inspire, to receive comfort, to educate, and etc. The potent part is that it doesn't stop there. People change, sometimes in a bad way and sometimes, in a good way. I want to do the latter.
+## Why start this blog?
+For thousands of years, people have been passing on stories to people by mouth and it has been a potent method to inspire, educate and entertain. In the modern age, it is exciting to think that storytelling could reach millions of people through the internet. By accessing information, people change. Opinions change. Perferences change. And ultimately, character is shaped through these countless sessions of information access. I'm no exception. I've learned a lot of things, both good and bad, from the internet, which shaped me the way I am now. But it was because of those people who willingly exposed their stories and knowledge out in the open internet so that people like me can benefit from it. Now, if I can share stories that could perhaps benefit even a few people, I think the reason for starting this blog is quite legitimate. While I don't know what kind of things I will write and post, I look forward to spreading positive influence to people who may need it.
