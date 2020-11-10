@@ -1,2 +1,2 @@
-# Bulletin
-A one-stop digital bulletin for announcements, chore duties, payments in households
+# Card
+Platform to send a special personalized message to all
