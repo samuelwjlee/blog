@@ -1,16 +1,22 @@
 # Card
-Platform to send messages that make others feel special
+Platform to send meaningful messages to feel closely connected to each other. The goal is to help users craft meaningful messages, present them in a special way, and encourage to make it a habit.
 
 ## User Experience
-Users feel happy about sending and receiving special messages to meaningful people (family, partners, work, social gatherings, etc) because they feel more connected to people by repeatedly sending and receiving thoughtful messages to each other. The focus of the platform is to help users craft quality words and make it a habit.
+Users feel happy about sending and receiving messages to meaningful people (family members, partners, co-workers, friends, etc) because users feel connected by articulating thoughts.
 
 ## Use Cases
-Year-end Thanksgiving or Christmas message. Regular expression of gratitude to people that helped.
+Thanksgiving or Christmas messages. Birthday cards. Regular expression of gratitude.
 
+## Minimal Viable Product
+Platform must allow users to login/signup with OAuth as well as to create, view, and share messages to users and non-users.
 
-## Technology
-Platform needs to have a delightful user interface that enables users to easily craft messages that reads special. There neeed to be users table and messsages associated with each user. The message sent also need to be viewable by non-users.
+### Features
+* OAuth
+* Create message
+* View message
+* Share message
 
+### Tech Stack
 * React with TypeScript
 * Node.js
 * Postgres
