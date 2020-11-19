@@ -1,10 +1,10 @@
 import React from 'react';
-import GoogleAuthButton from 'client/components/GoogleAuthButton';
+import AuthSection from 'client/components/AuthSection';
 
 function App() {
   return (
     <div className='App'>
-      <GoogleAuthButton />
+      <AuthSection />
     </div>
   );
 }
