@@ -1,7 +1,7 @@
 import React from 'react';
 import AuthSection from 'client/components/AuthSection';
 
-function App() {
+const App: React.FC = () => {
   return (
     <div className='App'>
       <AuthSection />

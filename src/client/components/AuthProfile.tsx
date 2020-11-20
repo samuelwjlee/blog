@@ -1,10 +1,10 @@
 import React from 'react';
-import { User } from 'client/store/types/Auth';
+import { User } from 'client/types/Auth';
 
 const AuthProfile: React.FC<User> = ({ isSignedIn, profileImageUrl, name, email  }) => {
   return (
     isSignedIn ?
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <>
         {
           profileImageUrl &&
           <img alt='profile' style={{ width: '50%' }} src={profileImageUrl} />
@@ -18,7 +18,7 @@ const AuthProfile: React.FC<User> = ({ isSignedIn, profileImageUrl, name, email 
           email &&
           `Your Email: ${email}`
         }
-      </div>
+      </>
       : null
   )
 };

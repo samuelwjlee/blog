@@ -1,12 +1,10 @@
 import React from 'react';
 
 type Props = {
-  isSignedIn: boolean,
-  handleSignIn: (res: any) => void,
-  handleSignOut: () => void
+  handleSignIn: (res: any) => void
 };
 
-const GoogleAuthButton: React.FC<Props> = ({ isSignedIn, handleSignIn, handleSignOut }) => {
+const GoogleAuthButton: React.FC<Props> = ({ handleSignIn }) => {
   return (
     <div
       className="g-signin2"
@@ -17,17 +15,11 @@ const GoogleAuthButton: React.FC<Props> = ({ isSignedIn, handleSignIn, handleSig
           if (window && (window as any).gapi) {
             const authInstance = (window as any).gapi.auth2.getAuthInstance();
 
-            isSignedIn
-              ? authInstance.signOut()
-                .then(
-                  (res: any) => handleSignOut(),
-                  (err: any) => console.log(err)
-                )
-              : authInstance.signIn()
-                .then(
-                  (res: any) => handleSignIn(res),
-                  (err: any) => console.log(err)
-                )
+            authInstance.signIn()
+              .then(
+                (res: any) => handleSignIn(res),
+                console.log
+              )
           }
         }
       }/>
