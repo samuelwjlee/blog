@@ -14,19 +14,6 @@ const InitialUserState = {
 const AuthSection: React.FC = () => {
   /* TODO: move user object to redux store to be globally referenced */
   const [ user, setUser ] = useState<User>(InitialUserState);
-  const [ mounted, setMounted ] = useState<boolean>(false);
-
-  /* Google meta tags to be appended before Component mounts */
-  if (!mounted){
-    const googleAuthMetaTag = document.createElement('meta');
-
-    googleAuthMetaTag.name = 'google-signin-client_id';
-    googleAuthMetaTag.content = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID || '';
-
-    document.head.appendChild(googleAuthMetaTag);
-
-    setMounted(true);
-  }
 
   const handleSignIn = (res: any): void => {
     const profile = res.getBasicProfile();
