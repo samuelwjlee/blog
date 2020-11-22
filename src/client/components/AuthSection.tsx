@@ -15,11 +15,11 @@ const AuthSection: React.FC = () => {
   /* TODO: move user object to redux store to be globally referenced */
   const [ user, setUser ] = useState<User>(InitialUserState);
 
-  const handleSignIn = (res: any): void => {
-    const profile = res.getBasicProfile();
+  const handleSignIn = (user: any): void => {
+    const profile = user.getBasicProfile();
 
     setUser({
-      isSignedIn: res.isSignedIn(),
+      isSignedIn: user.isSignedIn(),
       name: profile.getName(),
       email: profile.getEmail(),
       profileImageUrl: profile.getImageUrl(),
@@ -27,22 +27,15 @@ const AuthSection: React.FC = () => {
   }
   const handleSignOut = () => {
     if (window && (window as any).gapi) {
-      const authInstance = (window as any).gapi.auth2.getAuthInstance();
-
-      authInstance.signOut()
-        .then(
-          (res: any) => {
-            setUser(InitialUserState)
-          }
-        )
+      (window as any).gapi.auth2.getAuthInstance().signOut()
+        .then(() => setUser(InitialUserState))
+        .catch(console.log)
     }
   };
 
   return (
-    <>
-      {
-        user.isSignedIn &&
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+    user.isSignedIn
+      ? <div style={{ display: 'flex', flexDirection: 'column' }}>
           <AuthProfile
             isSignedIn={user.isSignedIn}
             name={user.name}
@@ -50,12 +43,7 @@ const AuthSection: React.FC = () => {
             profileImageUrl={user.profileImageUrl} />
             <button onClick={handleSignOut}>Sign out</button>
         </div>
-      }
-      {
-        !user.isSignedIn &&
-        <GoogleAuthButton handleSignIn={handleSignIn} />
-      }
-    </>
+      : <GoogleAuthButton handleSignIn={handleSignIn} />
   );
 }
 

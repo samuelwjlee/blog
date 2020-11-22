@@ -1,34 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 
 type Props = {
-  handleSignIn: (res: any) => void
+  handleSignIn: (user: any) => void
 };
 
 const GoogleAuthButton: React.FC<Props> = ({ handleSignIn }) => {
-  const [ mounted, setMounted ] = useState<boolean>(false);
-
-  /* Google meta and script tags to be appended before Component mounts */
-  if (!mounted){
-    const googleAuthMetaTag = document.createElement('meta');
-    const googleScriptTag = document.createElement('script');
-
-    googleAuthMetaTag.name = 'google-signin-client_id';
-    googleAuthMetaTag.content = process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID || '';
-    googleScriptTag.src = 'https://apis.google.com/js/platform.js';
-    googleScriptTag.onload = () => {
-      (window as any).gapi.load('auth2', () => {
-        renderButton();
-      });
-    }
-
-    document.head.appendChild(googleAuthMetaTag);
-    document.head.appendChild(googleScriptTag);
-
-    setMounted(true);
-  }
-
-  const renderButton = () => {
-    return (
+  useEffect(() => {
+    const renderButton = () => (
       (window as any).gapi.signin2.render('my-signin2', {
         'scope': 'profile email',
         'width': 240,
@@ -38,12 +16,43 @@ const GoogleAuthButton: React.FC<Props> = ({ handleSignIn }) => {
         'onsuccess': handleSignIn,
         'onfailure': console.log
       })
-    )
-  }
+    );
+
+    const handleOAuthOnLoad = () => {
+      (window as any).gapi.load('auth2', () => {
+        const auth2 = (window as any).gapi.auth2.init({
+          client_id: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
+          scope: 'profile email'
+        });
+
+        /* Listen for changes to current user. */
+        auth2.isSignedIn.listen((isUserSignedIn: boolean) => {
+          isUserSignedIn
+            ? handleSignIn(auth2.currentUser.get())
+            : renderButton();
+        });
+
+        /* Listen for sign-in state changes. */
+        auth2.currentUser.listen((user: any) => {
+          if (!user.getBasicProfile()) {
+            renderButton();
+          }
+        });
+      })
+    }
+
+    const googleScriptTag = document.createElement('script');
+
+    googleScriptTag.src = 'https://apis.google.com/js/platform.js';
+    googleScriptTag.async = true;
+    googleScriptTag.defer = true;
+    googleScriptTag.onload = handleOAuthOnLoad;
+    document.body.appendChild(googleScriptTag);
+  }, [ handleSignIn ]);
 
   return (
-    <div id='my-signin2'></div>
-  )
+    <div id='my-signin2' />
+  );
 };
 
 export default GoogleAuthButton;

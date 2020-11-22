@@ -11,18 +11,12 @@ const AuthProfile: React.FC<User> = ({
     isSignedIn
       ? <>
           {
-            profileImageUrl &&
+           profileImageUrl &&
             <img alt='profile' style={{ width: '50%' }} src={profileImageUrl} />
           }
-          {
-            name &&
-            `Hi there, ${name}!`
-          }
+          Name: { name }
           <br/>
-          {
-            email &&
-            `Your Email: ${email}`
-          }
+          Email: { email }
         </>
       : null
   )
