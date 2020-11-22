@@ -20,6 +20,18 @@ const useStyles = createUseStyles({
     width: 100,
     height: 25,
     margin: 5
+  },
+  signInContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    padding: 50,
+    border: '1px solid black'
+  },
+  signInTitle: {
+    fontSize: 15,
+    fontWeight: 600,
+    margin: '10px 0px'
   }
 });
 
@@ -71,7 +83,12 @@ const AuthSection: React.FC = () => {
               </button>
             </div>
         </div>
-      : <GoogleAuthButton handleSignIn={handleSignIn} />
+      : <div className={classes.signInContainer}>
+          <div className={classes.signInTitle}>
+            Sign into Wordful with Google
+          </div>
+          <GoogleAuthButton handleSignIn={handleSignIn} />
+        </div>
   );
 }
 

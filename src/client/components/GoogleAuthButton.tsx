@@ -47,6 +47,7 @@ const GoogleAuthButton: React.FC<Props> = ({ handleSignIn }) => {
     googleScriptTag.async = true;
     googleScriptTag.defer = true;
     googleScriptTag.onload = handleOAuthOnLoad;
+
     document.body.appendChild(googleScriptTag);
   }, [ handleSignIn ]);
 
