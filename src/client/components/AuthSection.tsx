@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { createUseStyles } from 'react-jss'
 
-import GoogleAuthButton from 'client/components/GoogleAuthButton';
+import AuthGoogleButton from 'client/components/AuthGoogleButton';
 import AuthProfile from 'client/components/AuthProfile';
 import { User } from 'client/types/Auth';
 
@@ -14,7 +14,8 @@ const useStyles = createUseStyles({
   },
   authActionContainer: {
     display: 'flex',
-    justifyContent: 'flex-end'
+    justifyContent: 'center',
+    marginTop: 10
   },
   signOutButton: {
     width: 100,
@@ -27,11 +28,6 @@ const useStyles = createUseStyles({
     justifyContent: 'center',
     padding: 50,
     border: '1px solid black'
-  },
-  signInTitle: {
-    fontSize: 15,
-    fontWeight: 600,
-    margin: '10px 0px'
   }
 });
 
@@ -84,10 +80,7 @@ const AuthSection: React.FC = () => {
             </div>
         </div>
       : <div className={classes.signInContainer}>
-          <div className={classes.signInTitle}>
-            Sign into Wordful with Google
-          </div>
-          <GoogleAuthButton handleSignIn={handleSignIn} />
+          <AuthGoogleButton handleSignIn={handleSignIn} />
         </div>
   );
 }

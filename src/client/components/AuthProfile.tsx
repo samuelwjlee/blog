@@ -5,10 +5,12 @@ import { User } from 'client/types/Auth';
 
 const useStyles = createUseStyles({
   profileContainer: {
-    display: 'flex'
+    display: 'flex',
+    alignItems: 'center'
   },
   profileImage: {
     borderRadius: '50%',
+    height: 55,
     marginRight: 10
   },
   profileInfo: {
@@ -18,8 +20,12 @@ const useStyles = createUseStyles({
     alignItems: 'flex-start',
     padding: 10
   },
-  profileInfoItem: {
-    fontSize: 14
+  userName: {
+    fontSize: 18
+  },
+  email: {
+    fontSize: 13,
+    fontWeight: 'lighter'
   }
 });
 
@@ -37,8 +43,8 @@ const AuthProfile: React.FC<User> = ({
         className={classes.profileImage}
         src={profileImageUrl || ''} />
       <div className={classes.profileInfo}>
-        <div className={classes.profileInfoItem}>{ name }</div>
-        <div className={classes.profileInfoItem}>{ email }</div>
+        <div className={classes.userName}>{ name }</div>
+        <div className={classes.email}>{ email }</div>
       </div>
     </div>
   )

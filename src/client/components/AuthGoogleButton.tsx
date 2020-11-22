@@ -4,7 +4,7 @@ type Props = {
   handleSignIn: (user: any) => void
 };
 
-const GoogleAuthButton: React.FC<Props> = ({ handleSignIn }) => {
+const AuthGoogleButton: React.FC<Props> = ({ handleSignIn }) => {
   useEffect(() => {
     const renderButton = () => (
       (window as any).gapi.signin2.render('my-signin2', {
@@ -56,4 +56,4 @@ const GoogleAuthButton: React.FC<Props> = ({ handleSignIn }) => {
   );
 };
 
-export default GoogleAuthButton;
+export default AuthGoogleButton;
