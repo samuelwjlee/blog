@@ -4,7 +4,7 @@ import { createUseStyles } from 'react-jss'
 import AuthSection from 'client/components/AuthSection';
 
 const useStyles = createUseStyles({
-  "@global": {
+  '@global': {
     body: {
       fontFamily: 'Open Sans, sans-serif',
       position: 'fixed',
@@ -12,8 +12,8 @@ const useStyles = createUseStyles({
       left: 0,
       margin: 0,
       display: 'flex',
-      justifyContent: "center",
-      alignItems: "center",
+      justifyContent: 'center',
+      alignItems: 'center',
       flexDirection: 'column',
       width: '100vw',
       height: '100vh'
