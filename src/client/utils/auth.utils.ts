@@ -1,5 +1,5 @@
 import { GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants';
-import { handleGoogleUserSignIn } from 'client/types/auth.types';
+import { GoogleUser, handleGoogleUserSignIn } from 'client/types/auth.types';
 
 const renderGoogleOAuthButton = (handleSignIn: handleGoogleUserSignIn): void => (
   (window as any).gapi.signin2.render(GOOGLE_OAUTH_BUTTON_ID, {
@@ -47,7 +47,7 @@ export const loadGoogleOAuthScript = (handleSignIn: handleGoogleUserSignIn): voi
   document.body.appendChild(googleScriptTag);
 }
 
-export const signOutGoogleUser = (callback: any) => {
+export const signOutGoogleUser = (callback: any): void => {
   const googleApi = (window as any).gapi;
 
   if (googleApi) {
@@ -55,4 +55,15 @@ export const signOutGoogleUser = (callback: any) => {
       .then(callback)
       .catch(console.log)
   }
+};
+
+export const signInGoogleUser = (googleUser: GoogleUser, callback: any): void => {
+  const profile = googleUser.getBasicProfile();
+
+  callback({
+    isSignedIn: googleUser.isSignedIn(),
+    name: profile.getName(),
+    email: profile.getEmail(),
+    profileImageUrl: profile.getImageUrl(),
+  })
 };

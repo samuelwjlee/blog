@@ -4,7 +4,7 @@ import { createUseStyles } from 'react-jss'
 import AuthGoogleButton from 'client/components/AuthGoogleButton';
 import AuthProfile from 'client/components/AuthProfile';
 import { GoogleUser, User } from 'client/types/auth.types';
-import { loadGoogleOAuthScript, signOutGoogleUser } from 'client/utils/auth.utils';
+import { loadGoogleOAuthScript, signInGoogleUser, signOutGoogleUser } from 'client/utils/auth.utils';
 import { GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants';
 
 const useStyles = createUseStyles({
@@ -44,15 +44,8 @@ const AuthSection: React.FC = () => {
   /* TODO: move user object to redux store to be globally referenced */
   const [ user, setUser ] = useState<User>(InitialUserState);
 
-  const handleSignIn = (user: GoogleUser): void => {
-    const profile = user.getBasicProfile();
-
-    setUser({
-      isSignedIn: user.isSignedIn(),
-      name: profile.getName(),
-      email: profile.getEmail(),
-      profileImageUrl: profile.getImageUrl(),
-    })
+  const handleSignIn = (googleUser: GoogleUser): void => {
+    signInGoogleUser(googleUser, setUser);
   };
 
   const handleSignOut = (): void => {
