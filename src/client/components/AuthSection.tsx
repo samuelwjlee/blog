@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createUseStyles } from 'react-jss'
 
 import AuthGoogleButton from 'client/components/AuthGoogleButton';
 import AuthProfile from 'client/components/AuthProfile';
-import { User } from 'client/types/Auth';
+import { GoogleUser, User } from 'client/types/auth.types';
+import { loadGoogleOAuthScript, signOutGoogleUser } from 'client/utils/auth.utils';
+import { GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants';
 
 const useStyles = createUseStyles({
-  profileContainer: {
+  authContainer: {
     display: 'flex',
     flexDirection: 'column',
+    justifyContent: 'center',
+    border: '1px solid black',
     padding: 30,
-    border: '1px solid black'
+    width: 300,
+    height: 135,
+    [`& #${GOOGLE_OAUTH_BUTTON_ID}`]: {
+      margin: 'auto'
+    }
   },
   authActionContainer: {
     display: 'flex',
@@ -21,13 +29,6 @@ const useStyles = createUseStyles({
     width: 100,
     height: 25,
     margin: 5
-  },
-  signInContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    padding: 50,
-    border: '1px solid black'
   }
 });
 
@@ -43,7 +44,7 @@ const AuthSection: React.FC = () => {
   /* TODO: move user object to redux store to be globally referenced */
   const [ user, setUser ] = useState<User>(InitialUserState);
 
-  const handleSignIn = (user: any): void => {
+  const handleSignIn = (user: GoogleUser): void => {
     const profile = user.getBasicProfile();
 
     setUser({
@@ -52,20 +53,19 @@ const AuthSection: React.FC = () => {
       email: profile.getEmail(),
       profileImageUrl: profile.getImageUrl(),
     })
-  }
-  const handleSignOut = () => {
-    const googleApi = (window as any).gapi;
-
-    if (googleApi) {
-      googleApi.auth2.getAuthInstance().signOut()
-        .then(() => setUser(InitialUserState))
-        .catch(console.log)
-    }
   };
+
+  const handleSignOut = (): void => {
+    signOutGoogleUser(() => setUser(InitialUserState))
+  };
+
+  useEffect(() => {
+    loadGoogleOAuthScript(handleSignIn);
+  }, []);
 
   return (
     user.isSignedIn
-      ? <div className={classes.profileContainer}>
+      ? <div className={classes.authContainer}>
           <AuthProfile
             isSignedIn={user.isSignedIn}
             name={user.name}
@@ -79,8 +79,8 @@ const AuthSection: React.FC = () => {
               </button>
             </div>
         </div>
-      : <div className={classes.signInContainer}>
-          <AuthGoogleButton handleSignIn={handleSignIn} />
+      : <div className={classes.authContainer}>
+          <AuthGoogleButton />
         </div>
   );
 }

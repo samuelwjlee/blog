@@ -1,12 +1,13 @@
 import React from 'react';
 import { createUseStyles } from 'react-jss'
 
-import { User } from 'client/types/Auth';
+import { User } from 'client/types/auth.types';
 
 const useStyles = createUseStyles({
   profileContainer: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   profileImage: {
     borderRadius: '50%',
