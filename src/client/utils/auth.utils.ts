@@ -1,7 +1,7 @@
 import { GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants';
 import { GoogleUser, User, handleGoogleUserSignIn } from 'client/types/auth.types';
 
-const renderGoogleOAuthButton = (handleSignIn: handleGoogleUserSignIn): void => {
+export const renderGoogleOAuthButton = (handleSignIn: handleGoogleUserSignIn): void => {
   (window as any).gapi.signin2.render(GOOGLE_OAUTH_BUTTON_ID, {
     'scope': 'profile email',
     'width': 240,

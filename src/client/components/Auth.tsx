@@ -4,7 +4,7 @@ import { createUseStyles } from 'react-jss'
 import AuthGoogleButton from 'client/components/AuthGoogleButton';
 import AuthProfile from 'client/components/AuthProfile';
 import { GoogleUser, User } from 'client/types/auth.types';
-import { loadGoogleOAuthScript, signInGoogleUser, signOutGoogleUser } from 'client/utils/auth.utils';
+import { loadGoogleOAuthScript, renderGoogleOAuthButton, signInGoogleUser, signOutGoogleUser } from 'client/utils/auth.utils';
 import { GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants';
 import { HEADER_HEIGHT } from 'client/constants/auth.constants';
 
@@ -64,12 +64,23 @@ const Auth: React.FC = () => {
     loadGoogleOAuthScript(handleSignIn);
   }, []);
 
+  /**
+   * need to do a fresh google oAuth re-render
+   * when isAuthOpen and !user.isSigned
+   */
+  useEffect(() => {
+    if (isAuthOpen && !user.isSignedIn) {
+      renderGoogleOAuthButton(handleSignIn);
+    }
+  }, [ isAuthOpen, user.isSignedIn ]);
+
   return (
     <>
       <img
         role='button'
         alt='auth'
         onClick={() => setIsAuthOpen(!isAuthOpen)}
+        onBlur={() => setIsAuthOpen(false)}
         className={classes.authButton}
         src={user.profileImageUrl || 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_258083.png&f=1&nofb=1'} />
       {
