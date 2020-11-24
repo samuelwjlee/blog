@@ -1,7 +1,7 @@
 import { GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants';
 import { GoogleUser, User, handleGoogleUserSignIn } from 'client/types/auth.types';
 
-const renderGoogleOAuthButton = (handleSignIn: handleGoogleUserSignIn): void => (
+const renderGoogleOAuthButton = (handleSignIn: handleGoogleUserSignIn): void => {
   (window as any).gapi.signin2.render(GOOGLE_OAUTH_BUTTON_ID, {
     'scope': 'profile email',
     'width': 240,
@@ -11,7 +11,7 @@ const renderGoogleOAuthButton = (handleSignIn: handleGoogleUserSignIn): void => 
     'onsuccess': handleSignIn,
     'onfailure': console.log
   })
-);
+};
 
 const handleGoogleOAuthOnLoad = (handleSignIn: handleGoogleUserSignIn): void => {
   (window as any).gapi.load('auth2', () => {
@@ -59,7 +59,7 @@ type AuthActionArg = {
   callback: (user: User) => void
 };
 const isGoogleUser = (user: User | GoogleUser): user is GoogleUser => !!((user as GoogleUser).getBasicProfile && (user as GoogleUser).isSignedIn);
-const isAppUser = (user: User | GoogleUser): user is User => !!((user as User).name && (user as User).email &&  (user as User).profileImageUrl);
+const isAppUser = (user: User | GoogleUser): user is User => !!((user as User).hasOwnProperty('name') && (user as User).hasOwnProperty('email') &&  (user as User).hasOwnProperty('profileImageUrl'));
 
 
 export const signOutGoogleUser = ({ user, callback }: AuthActionArg): void => {

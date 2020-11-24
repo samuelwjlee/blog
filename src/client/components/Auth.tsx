@@ -6,9 +6,16 @@ import AuthProfile from 'client/components/AuthProfile';
 import { GoogleUser, User } from 'client/types/auth.types';
 import { loadGoogleOAuthScript, signInGoogleUser, signOutGoogleUser } from 'client/utils/auth.utils';
 import { GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants';
+import { HEADER_HEIGHT } from 'client/constants/auth.constants';
 
 const useStyles = createUseStyles({
+  authButton: {
+    borderRadius: '50%',
+    height: 45
+  },
   authContainer: {
+    position: 'absolute',
+    top: HEADER_HEIGHT + 10,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
@@ -39,10 +46,11 @@ const InitialUserState = {
   profileImageUrl: null
 };
 
-const AuthSection: React.FC = () => {
+const Auth: React.FC = () => {
   const classes = useStyles();
   /* TODO: move user object to redux store to be globally referenced */
   const [ user, setUser ] = useState<User>(InitialUserState);
+  const [ isAuthOpen, setIsAuthOpen ] = useState<boolean>(false);
 
   const handleSignIn = (googleUser: GoogleUser): void => {
     signInGoogleUser({ user: googleUser, callback: setUser });
@@ -57,25 +65,34 @@ const AuthSection: React.FC = () => {
   }, []);
 
   return (
-    user.isSignedIn
-      ? <div className={classes.authContainer}>
-          <AuthProfile
-            isSignedIn={user.isSignedIn}
-            name={user.name}
-            email={user.email}
-            profileImageUrl={user.profileImageUrl} />
-            <div className={classes.authActionContainer}>
-              <button
-                className={classes.signOutButton}
-                onClick={handleSignOut}>
-                  Sign out
-              </button>
-            </div>
-        </div>
-      : <div className={classes.authContainer}>
-          <AuthGoogleButton />
-        </div>
+    <>
+      <img
+        role='button'
+        alt='auth'
+        onClick={() => setIsAuthOpen(!isAuthOpen)}
+        className={classes.authButton}
+        src={user.profileImageUrl || 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_258083.png&f=1&nofb=1'} />
+      {
+        isAuthOpen &&
+          <div className={classes.authContainer}>
+            {
+              user.isSignedIn
+                ? <>
+                    <AuthProfile {...user} />
+                    <div className={classes.authActionContainer}>
+                      <button
+                        className={classes.signOutButton}
+                        onClick={handleSignOut}>
+                          Sign out
+                      </button>
+                    </div>
+                </>
+                : <AuthGoogleButton />
+            }
+          </div>
+      }
+    </>
   );
 }
 
-export default AuthSection;
+export default Auth;
