@@ -1,5 +1,5 @@
 import { GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants';
-import { GoogleUser, handleGoogleUserSignIn } from 'client/types/auth.types';
+import { GoogleUser, User, handleGoogleUserSignIn } from 'client/types/auth.types';
 
 const renderGoogleOAuthButton = (handleSignIn: handleGoogleUserSignIn): void => (
   (window as any).gapi.signin2.render(GOOGLE_OAUTH_BUTTON_ID, {
@@ -20,15 +20,22 @@ const handleGoogleOAuthOnLoad = (handleSignIn: handleGoogleUserSignIn): void => 
       scope: 'profile email'
     });
 
-    /* Listen for changes to current user. */
+    /**
+     * Listen for sign-in state changes.
+     * e.g.) session expired
+     * this is also to presist signed in user
+     */
     auth2.isSignedIn.listen((isUserSignedIn: boolean) => {
       isUserSignedIn
-        ? handleSignIn(auth2.currentUser.get())
-        : renderGoogleOAuthButton(handleSignIn);
+      ? handleSignIn(auth2.currentUser.get())
+      : renderGoogleOAuthButton(handleSignIn);
     });
 
-    /* Listen for sign-in state changes. */
-    auth2.currentUser.listen((user: any) => {
+    /**
+     * Listen for changes to current user.
+     * e.g.) user signs out, closes and re-opens browser
+     */
+    auth2.currentUser.listen((user: GoogleUser) => {
       if (!user.getBasicProfile()) {
         renderGoogleOAuthButton(handleSignIn);
       }
@@ -47,23 +54,33 @@ export const loadGoogleOAuthScript = (handleSignIn: handleGoogleUserSignIn): voi
   document.body.appendChild(googleScriptTag);
 }
 
-export const signOutGoogleUser = (callback: any): void => {
+type AuthActionArg = {
+  user: User | GoogleUser,
+  callback: (user: User) => void
+};
+const isGoogleUser = (user: User | GoogleUser): user is GoogleUser => !!((user as GoogleUser).getBasicProfile && (user as GoogleUser).isSignedIn);
+const isAppUser = (user: User | GoogleUser): user is User => !!((user as User).name && (user as User).email &&  (user as User).profileImageUrl);
+
+
+export const signOutGoogleUser = ({ user, callback }: AuthActionArg): void => {
   const googleApi = (window as any).gapi;
 
-  if (googleApi) {
+  if (googleApi && isAppUser(user)) {
     googleApi.auth2.getAuthInstance().signOut()
-      .then(callback)
+      .then(() => callback(user))
       .catch(console.log)
   }
 };
 
-export const signInGoogleUser = (googleUser: GoogleUser, callback: any): void => {
-  const profile = googleUser.getBasicProfile();
+export const signInGoogleUser = ({ user, callback }: AuthActionArg): void => {
+  if (isGoogleUser(user)) {
+    const profile = user.getBasicProfile();
 
-  callback({
-    isSignedIn: googleUser.isSignedIn(),
-    name: profile.getName(),
-    email: profile.getEmail(),
-    profileImageUrl: profile.getImageUrl(),
-  })
+    callback({
+      isSignedIn: user.isSignedIn(),
+      name: profile.getName(),
+      email: profile.getEmail(),
+      profileImageUrl: profile.getImageUrl(),
+    })
+  }
 };

@@ -45,11 +45,11 @@ const AuthSection: React.FC = () => {
   const [ user, setUser ] = useState<User>(InitialUserState);
 
   const handleSignIn = (googleUser: GoogleUser): void => {
-    signInGoogleUser(googleUser, setUser);
+    signInGoogleUser({ user: googleUser, callback: setUser });
   };
 
   const handleSignOut = (): void => {
-    signOutGoogleUser(() => setUser(InitialUserState))
+    signOutGoogleUser({ user: InitialUserState, callback: setUser });
   };
 
   useEffect(() => {
