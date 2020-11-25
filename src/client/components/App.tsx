@@ -2,6 +2,7 @@ import React from 'react';
 import { createUseStyles } from 'react-jss'
 
 import Header from 'client/components/Header';
+import Dashboard from 'client/components/Dashboard';
 
 const useStyles = createUseStyles({
   '@global': {
@@ -28,6 +29,7 @@ const App: React.FC = () => {
   return (
     <div className='App'>
       <Header />
+      <Dashboard />
     </div>
   );
 }

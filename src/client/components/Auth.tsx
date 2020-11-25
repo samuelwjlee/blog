@@ -82,7 +82,6 @@ const Auth: React.FC = () => {
     <div
       role='button'
       onClick={() => setIsAuthOpen(!isAuthOpen)}
-      onBlur={() => setIsAuthOpen(false)}
       className={classes.authIconButton}>
       {
         isAuthOpen &&
