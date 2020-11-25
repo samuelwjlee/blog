@@ -58,8 +58,13 @@ type AuthActionArg = {
   user: User | GoogleUser,
   callback: (user: User) => void
 };
-const isGoogleUser = (user: User | GoogleUser): user is GoogleUser => !!((user as GoogleUser).getBasicProfile && (user as GoogleUser).isSignedIn);
-const isAppUser = (user: User | GoogleUser): user is User => !!((user as User).hasOwnProperty('name') && (user as User).hasOwnProperty('email') &&  (user as User).hasOwnProperty('profileImageUrl'));
+const isGoogleUser = (user: User | GoogleUser): user is GoogleUser =>
+  !!((user as GoogleUser).getBasicProfile &&
+  (user as GoogleUser).isSignedIn);
+const isAppUser = (user: User | GoogleUser): user is User =>
+  !!((user as User).hasOwnProperty('name') &&
+  (user as User).hasOwnProperty('email') &&
+  (user as User).hasOwnProperty('profileImageUrl'));
 
 
 export const signOutGoogleUser = ({ user, callback }: AuthActionArg): void => {

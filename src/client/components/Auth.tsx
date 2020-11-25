@@ -5,29 +5,33 @@ import AuthGoogleButton from 'client/components/AuthGoogleButton';
 import AuthProfile from 'client/components/AuthProfile';
 import { GoogleUser, User } from 'client/types/auth.types';
 import { loadGoogleOAuthScript, renderGoogleOAuthButton, signInGoogleUser, signOutGoogleUser } from 'client/utils/auth.utils';
-import { GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants';
-import { HEADER_HEIGHT } from 'client/constants/auth.constants';
+import { HEADER_HEIGHT, GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants';
+import Avatar from 'client/assets/avatar-icon.png';
 
 const useStyles = createUseStyles({
-  authButton: {
+  authIconButton: {
     borderRadius: '50%',
-    height: 45
+    height: 45,
+    width: 45,
+    backgroundImage: (profileImageUrl: string | null) => `url(${profileImageUrl ?? Avatar})`,
+    backgroundSize: 'cover'
   },
-  authContainer: {
+  authDropdown: {
     position: 'absolute',
-    top: HEADER_HEIGHT + 10,
+    top: HEADER_HEIGHT,
+    right: 15,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     border: '1px solid black',
     padding: 30,
-    width: 300,
-    height: 135,
+    minWidth: 280,
+    minHeight: 135,
     [`& #${GOOGLE_OAUTH_BUTTON_ID}`]: {
       margin: 'auto'
     }
   },
-  authActionContainer: {
+  authAction: {
     display: 'flex',
     justifyContent: 'center',
     marginTop: 10
@@ -47,10 +51,10 @@ const InitialUserState = {
 };
 
 const Auth: React.FC = () => {
-  const classes = useStyles();
   /* TODO: move user object to redux store to be globally referenced */
   const [ user, setUser ] = useState<User>(InitialUserState);
   const [ isAuthOpen, setIsAuthOpen ] = useState<boolean>(false);
+  const classes = useStyles(user.profileImageUrl);
 
   const handleSignIn = (googleUser: GoogleUser): void => {
     signInGoogleUser({ user: googleUser, callback: setUser });
@@ -66,7 +70,7 @@ const Auth: React.FC = () => {
 
   /**
    * need to do a fresh google oAuth re-render
-   * when isAuthOpen and !user.isSigned
+   * since google oauth button element re-mounted
    */
   useEffect(() => {
     if (isAuthOpen && !user.isSignedIn) {
@@ -75,22 +79,19 @@ const Auth: React.FC = () => {
   }, [ isAuthOpen, user.isSignedIn ]);
 
   return (
-    <>
-      <img
-        role='button'
-        alt='auth'
-        onClick={() => setIsAuthOpen(!isAuthOpen)}
-        onBlur={() => setIsAuthOpen(false)}
-        className={classes.authButton}
-        src={user.profileImageUrl || 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fimg_258083.png&f=1&nofb=1'} />
+    <div
+      role='button'
+      onClick={() => setIsAuthOpen(!isAuthOpen)}
+      onBlur={() => setIsAuthOpen(false)}
+      className={classes.authIconButton}>
       {
         isAuthOpen &&
-          <div className={classes.authContainer}>
+          <div className={classes.authDropdown}>
             {
               user.isSignedIn
                 ? <>
                     <AuthProfile {...user} />
-                    <div className={classes.authActionContainer}>
+                    <div className={classes.authAction}>
                       <button
                         className={classes.signOutButton}
                         onClick={handleSignOut}>
@@ -102,7 +103,7 @@ const Auth: React.FC = () => {
             }
           </div>
       }
-    </>
+    </div>
   );
 }
 
