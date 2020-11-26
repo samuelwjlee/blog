@@ -2,7 +2,7 @@ import React from 'react';
 import { createUseStyles } from 'react-jss'
 
 import Auth from 'client/components/Auth';
-import { HEADER_HEIGHT } from 'client/constants/auth.constants';
+import { HEADER_HEIGHT } from 'client/constants/style.constants';
 
 const useStyles = createUseStyles({
   header: {

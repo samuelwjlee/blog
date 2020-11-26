@@ -5,7 +5,8 @@ import AuthGoogleButton from 'client/components/AuthGoogleButton';
 import AuthProfile from 'client/components/AuthProfile';
 import { GoogleUser, User } from 'client/types/auth.types';
 import { loadGoogleOAuthScript, renderGoogleOAuthButton, signInGoogleUser, signOutGoogleUser } from 'client/utils/auth.utils';
-import { HEADER_HEIGHT, GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants';
+import { HEADER_HEIGHT } from 'client/constants/style.constants';
+import { GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants';
 import Avatar from 'client/assets/avatar-icon.png';
 
 const useStyles = createUseStyles({

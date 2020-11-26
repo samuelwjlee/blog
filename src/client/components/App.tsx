@@ -3,6 +3,7 @@ import { createUseStyles } from 'react-jss'
 
 import Header from 'client/components/Header';
 import Dashboard from 'client/components/Dashboard';
+import Word from 'client/components/Word';
 
 const useStyles = createUseStyles({
   '@global': {
@@ -20,16 +21,24 @@ const useStyles = createUseStyles({
       width: '100vw',
       height: '100vh'
     },
+  },
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center'
   }
 });
 
 const App: React.FC = () => {
-  useStyles();
+  const classes = useStyles();
 
   return (
     <div className='App'>
       <Header />
-      <Dashboard />
+      <div className={classes.content}>
+        <Dashboard />
+        <Word />
+      </div>
     </div>
   );
 }
