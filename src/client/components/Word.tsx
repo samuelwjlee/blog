@@ -6,24 +6,41 @@ import { BODY_WIDTH_MIN_MAX } from 'client/constants/style.constants';
 const useStyles = createUseStyles({
   wordContainer: {
     ...BODY_WIDTH_MIN_MAX,
-    padding: 30,
-    border: '1px solid black'
+    marginTop: 20,
+    border: '1px solid black',
+    display: 'flex',
+    height: 200
   },
-  word: {},
-  definition: {}
+  word: {
+    padding: '10px 50px',
+    fontSize: 30,
+    fontWeight: 'bold',
+    background: '#0001',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  definition: {
+    padding: '10px 30px',
+    fontSize: 15,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 });
 
-const Word: React.FC = () => {
+type WordProps = {
+  word: string,
+  definition: string
+}
+
+const Word: React.FC<WordProps> = ({ word, definition }) => {
   const classes = useStyles();
 
   return (
     <div className={classes.wordContainer}>
-      <div className={classes.word}>
-
-      </div>
-      <div className={classes.definition}>
-
-      </div>
+      <div className={classes.word}>{ word }</div>
+      <div className={classes.definition}>{ definition }</div>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { createUseStyles } from 'react-jss'
 import Header from 'client/components/Header';
 import Dashboard from 'client/components/Dashboard';
 import Word from 'client/components/Word';
+import { mockWords } from '__mocks__/word.mocks';
 
 const useStyles = createUseStyles({
   '@global': {
@@ -37,7 +38,13 @@ const App: React.FC = () => {
       <Header />
       <div className={classes.content}>
         <Dashboard />
-        <Word />
+        {
+          Object.keys(mockWords).map((word) => (
+            <Word
+              word={word}
+              definition={mockWords[word]} />
+          ))
+        }
       </div>
     </div>
   );
