@@ -39,8 +39,9 @@ const App: React.FC = () => {
       <div className={classes.content}>
         <Dashboard />
         {
-          Object.keys(mockWords).map((word) => (
+          Object.keys(mockWords).map((word, idx) => (
             <Word
+              key={`word-${word}-${idx}`}
               word={word}
               definition={mockWords[word]} />
           ))
