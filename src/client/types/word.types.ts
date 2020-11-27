@@ -1,3 +1,3 @@
 export type Words = {
-  [key: string]: string;
-};
+  [key: string]: string
+}

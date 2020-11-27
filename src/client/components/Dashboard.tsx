@@ -1,37 +1,37 @@
-import React from "react";
-import { createUseStyles } from "react-jss";
+import React from 'react'
+import { createUseStyles } from 'react-jss'
 
-import { BODY_WIDTH_MIN_MAX } from "client/constants/style.constants";
+import { BODY_WIDTH_MIN_MAX } from 'client/constants/style.constants'
 
 const useStyles = createUseStyles({
   dashBoard: {
     ...BODY_WIDTH_MIN_MAX,
     padding: 30,
-    display: "flex",
-    flexDirection: "column",
-    border: "1px solid black",
+    display: 'flex',
+    flexDirection: 'column',
+    border: '1px solid black',
   },
   message: {
     fontSize: 25,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   stats: {
-    display: "flex",
+    display: 'flex',
     marginTop: 20,
   },
   statsItem: {
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
     fontSize: 20,
     marginRight: 20,
   },
   statsAddedLabel: {},
   statsAddedVal: {
     fontSize: 18,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
-});
+})
 
 /**
  * encouraging message on top
@@ -39,7 +39,7 @@ const useStyles = createUseStyles({
  * stats on words added and mastered
  */
 const Dashboard: React.FC = () => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <div className={classes.dashBoard}>
@@ -55,7 +55,7 @@ const Dashboard: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard

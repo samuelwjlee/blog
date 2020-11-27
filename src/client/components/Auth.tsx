@@ -1,46 +1,46 @@
-import React, { useEffect, useState } from "react";
-import { createUseStyles } from "react-jss";
+import React, { useEffect, useState } from 'react'
+import { createUseStyles } from 'react-jss'
 
-import AuthGoogleButton from "client/components/AuthGoogleButton";
-import AuthProfile from "client/components/AuthProfile";
-import { GoogleUser, User } from "client/types/auth.types";
+import AuthGoogleButton from 'client/components/AuthGoogleButton'
+import AuthProfile from 'client/components/AuthProfile'
+import { GoogleUser, User } from 'client/types/auth.types'
 import {
   loadGoogleOAuthScript,
   renderGoogleOAuthButton,
   signInGoogleUser,
   signOutGoogleUser,
-} from "client/utils/auth.utils";
-import { HEADER_HEIGHT } from "client/constants/style.constants";
-import { GOOGLE_OAUTH_BUTTON_ID } from "client/constants/auth.constants";
-import Avatar from "client/assets/avatar-icon.png";
+} from 'client/utils/auth.utils'
+import { HEADER_HEIGHT } from 'client/constants/style.constants'
+import { GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants'
+import Avatar from 'client/assets/avatar-icon.png'
 
 const useStyles = createUseStyles({
   authIconButton: {
-    borderRadius: "50%",
+    borderRadius: '50%',
     height: 45,
     width: 45,
     backgroundImage: (profileImageUrl: string | null) =>
       `url(${profileImageUrl ?? Avatar})`,
-    backgroundSize: "cover",
+    backgroundSize: 'cover',
   },
   authDropdown: {
-    position: "absolute",
+    position: 'absolute',
     top: HEADER_HEIGHT,
     right: 15,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    border: "1px solid black",
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    border: '1px solid black',
     padding: 30,
     minWidth: 280,
     minHeight: 135,
     [`& #${GOOGLE_OAUTH_BUTTON_ID}`]: {
-      margin: "auto",
+      margin: 'auto',
     },
   },
   authAction: {
-    display: "flex",
-    justifyContent: "center",
+    display: 'flex',
+    justifyContent: 'center',
     marginTop: 10,
   },
   signOutButton: {
@@ -48,32 +48,32 @@ const useStyles = createUseStyles({
     height: 25,
     margin: 5,
   },
-});
+})
 
 const InitialUserState = {
   isSignedIn: false,
   name: null,
   email: null,
   profileImageUrl: null,
-};
+}
 
 const Auth: React.FC = () => {
   /* TODO: move user object to redux store to be globally referenced */
-  const [user, setUser] = useState<User>(InitialUserState);
-  const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
-  const classes = useStyles(user.profileImageUrl);
+  const [user, setUser] = useState<User>(InitialUserState)
+  const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false)
+  const classes = useStyles(user.profileImageUrl)
 
   const handleSignIn = (googleUser: GoogleUser): void => {
-    signInGoogleUser({ user: googleUser, callback: setUser });
-  };
+    signInGoogleUser({ user: googleUser, callback: setUser })
+  }
 
   const handleSignOut = (): void => {
-    signOutGoogleUser({ user: InitialUserState, callback: setUser });
-  };
+    signOutGoogleUser({ user: InitialUserState, callback: setUser })
+  }
 
   useEffect(() => {
-    loadGoogleOAuthScript(handleSignIn);
-  }, []);
+    loadGoogleOAuthScript(handleSignIn)
+  }, [])
 
   /**
    * need to do a fresh google oAuth re-render
@@ -81,13 +81,13 @@ const Auth: React.FC = () => {
    */
   useEffect(() => {
     if (isAuthOpen && !user.isSignedIn) {
-      renderGoogleOAuthButton(handleSignIn);
+      renderGoogleOAuthButton(handleSignIn)
     }
-  }, [isAuthOpen, user.isSignedIn]);
+  }, [isAuthOpen, user.isSignedIn])
 
   return (
     <div
-      role="button"
+      role='button'
       onClick={() => setIsAuthOpen(!isAuthOpen)}
       className={classes.authIconButton}
     >
@@ -111,7 +111,7 @@ const Auth: React.FC = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Auth;
+export default Auth
