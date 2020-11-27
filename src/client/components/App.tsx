@@ -5,6 +5,7 @@ import Header from 'client/components/Header'
 import Dashboard from 'client/components/Dashboard'
 import Word from 'client/components/Word'
 import { mockWords } from '__mocks__/word.mocks'
+import { BODY_WIDTH_MIN_MAX } from 'client/constants/style.constants'
 
 const useStyles = createUseStyles({
   '@global': {
@@ -24,9 +25,9 @@ const useStyles = createUseStyles({
     },
   },
   content: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    ...BODY_WIDTH_MIN_MAX,
+    margin: 'auto',
+    paddingBottom: 80
   },
 })
 

@@ -1,11 +1,8 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
 
-import { BODY_WIDTH_MIN_MAX } from 'client/constants/style.constants'
-
 const useStyles = createUseStyles({
   dashBoard: {
-    ...BODY_WIDTH_MIN_MAX,
     padding: 30,
     display: 'flex',
     flexDirection: 'column',

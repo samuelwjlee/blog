@@ -1,31 +1,30 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
 
-import { BODY_WIDTH_MIN_MAX } from 'client/constants/style.constants'
+const COMMON_WORD_DEF_STYLE = {
+  padding: '20px 10px 20px 30px',
+  display: 'flex',
+  justifyContent: 'flex-start',
+  alignItems: 'center'
+}
 
 const useStyles = createUseStyles({
   wordContainer: {
-    ...BODY_WIDTH_MIN_MAX,
     marginTop: 20,
     border: '1px solid black',
     display: 'flex',
+    flexDirection: 'column',
     height: 200,
   },
   word: {
-    padding: '10px 50px',
+    ...COMMON_WORD_DEF_STYLE,
     fontSize: 30,
     fontWeight: 'bold',
-    background: '#0001',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    background: '#0001'
   },
   definition: {
-    padding: '10px 30px',
-    fontSize: 15,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    ...COMMON_WORD_DEF_STYLE,
+    fontSize: 15
   },
 })
 
@@ -34,7 +33,7 @@ type WordProps = {
   definition: string
 }
 
-const Word: React.FC<WordProps> = ({ word, definition }) => {
+const Word: React.FC<WordProps> = ({word,definition }) => {
   const classes = useStyles()
 
   return (
