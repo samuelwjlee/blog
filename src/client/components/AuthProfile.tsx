@@ -7,27 +7,27 @@ const useStyles = createUseStyles({
   profileContainer: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   profileImage: {
     borderRadius: '50%',
     height: 55,
-    marginRight: 10,
+    marginRight: 10
   },
   profileInfo: {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    padding: 10,
+    padding: 10
   },
   userName: {
-    fontSize: 18,
+    fontSize: 18
   },
   email: {
     fontSize: 13,
-    fontWeight: 'lighter',
-  },
+    fontWeight: 'lighter'
+  }
 })
 
 const AuthProfile: React.FC<User> = ({ profileImageUrl, name, email }) => {
@@ -36,7 +36,7 @@ const AuthProfile: React.FC<User> = ({ profileImageUrl, name, email }) => {
   return (
     <div className={classes.profileContainer}>
       <img
-        alt='profile'
+        alt="profile"
         className={classes.profileImage}
         src={profileImageUrl || ''}
       />

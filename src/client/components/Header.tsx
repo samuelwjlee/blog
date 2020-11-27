@@ -15,12 +15,12 @@ const useStyles = createUseStyles({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '10px 30px',
+    padding: '10px 30px'
   },
   logo: {
     fontSize: 30,
-    fontWeight: 'bold',
-  },
+    fontWeight: 'bold'
+  }
 })
 
 const Header: React.FC = () => {

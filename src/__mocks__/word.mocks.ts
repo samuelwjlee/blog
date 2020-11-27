@@ -5,5 +5,5 @@ export const mockWords: Words = {
   wistful: 'vaguely longing, sadly thoughtful',
   contrived: 'artificial; labored',
   balk: 'refuse to proceed or to do something',
-  vacilitate: 'fluctuating, wavering',
+  vacilitate: 'fluctuating, wavering'
 }

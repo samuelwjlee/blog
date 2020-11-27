@@ -8,7 +8,7 @@ import {
   loadGoogleOAuthScript,
   renderGoogleOAuthButton,
   signInGoogleUser,
-  signOutGoogleUser,
+  signOutGoogleUser
 } from 'client/utils/auth.utils'
 import { HEADER_HEIGHT } from 'client/constants/style.constants'
 import { GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants'
@@ -21,7 +21,7 @@ const useStyles = createUseStyles({
     width: 45,
     backgroundImage: (profileImageUrl: string | null) =>
       `url(${profileImageUrl ?? Avatar})`,
-    backgroundSize: 'cover',
+    backgroundSize: 'cover'
   },
   authDropdown: {
     position: 'absolute',
@@ -35,26 +35,26 @@ const useStyles = createUseStyles({
     minWidth: 280,
     minHeight: 135,
     [`& #${GOOGLE_OAUTH_BUTTON_ID}`]: {
-      margin: 'auto',
-    },
+      margin: 'auto'
+    }
   },
   authAction: {
     display: 'flex',
     justifyContent: 'center',
-    marginTop: 10,
+    marginTop: 10
   },
   signOutButton: {
     width: 100,
     height: 25,
-    margin: 5,
-  },
+    margin: 5
+  }
 })
 
 const InitialUserState = {
   isSignedIn: false,
   name: null,
   email: null,
-  profileImageUrl: null,
+  profileImageUrl: null
 }
 
 const Auth: React.FC = () => {
@@ -87,7 +87,7 @@ const Auth: React.FC = () => {
 
   return (
     <div
-      role='button'
+      role="button"
       onClick={() => setIsAuthOpen(!isAuthOpen)}
       className={classes.authIconButton}
     >

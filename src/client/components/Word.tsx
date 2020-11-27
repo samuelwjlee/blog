@@ -14,7 +14,7 @@ const useStyles = createUseStyles({
     border: '1px solid black',
     display: 'flex',
     flexDirection: 'column',
-    height: 200,
+    height: 200
   },
   word: {
     ...COMMON_WORD_DEF_STYLE,
@@ -25,7 +25,7 @@ const useStyles = createUseStyles({
   definition: {
     ...COMMON_WORD_DEF_STYLE,
     fontSize: 15
-  },
+  }
 })
 
 type WordProps = {
@@ -33,7 +33,7 @@ type WordProps = {
   definition: string
 }
 
-const Word: React.FC<WordProps> = ({word,definition }) => {
+const Word: React.FC<WordProps> = ({ word, definition }) => {
   const classes = useStyles()
 
   return (

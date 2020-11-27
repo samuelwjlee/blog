@@ -6,28 +6,28 @@ const useStyles = createUseStyles({
     padding: 30,
     display: 'flex',
     flexDirection: 'column',
-    border: '1px solid black',
+    border: '1px solid black'
   },
   message: {
     fontSize: 25,
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   stats: {
     display: 'flex',
-    marginTop: 20,
+    marginTop: 20
   },
   statsItem: {
     display: 'flex',
     flexDirection: 'column',
     fontSize: 20,
-    marginRight: 20,
+    marginRight: 20
   },
   statsAddedLabel: {},
   statsAddedVal: {
     fontSize: 18,
     fontWeight: 'bold',
-    textAlign: 'center',
-  },
+    textAlign: 'center'
+  }
 })
 
 /**

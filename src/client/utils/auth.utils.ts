@@ -2,7 +2,7 @@ import { GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants'
 import {
   GoogleUser,
   User,
-  handleGoogleUserSignIn,
+  handleGoogleUserSignIn
 } from 'client/types/auth.types'
 
 export const renderGoogleOAuthButton = (
@@ -15,7 +15,7 @@ export const renderGoogleOAuthButton = (
     longtitle: true,
     theme: 'dark',
     onsuccess: handleSignIn,
-    onfailure: console.log,
+    onfailure: console.log
   })
 }
 
@@ -25,7 +25,7 @@ const handleGoogleOAuthOnLoad = (
   ;(window as any).gapi.load('auth2', () => {
     const auth2 = (window as any).gapi.auth2.init({
       client_id: process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID,
-      scope: 'profile email',
+      scope: 'profile email'
     })
 
     /**
@@ -97,7 +97,7 @@ export const signInGoogleUser = ({ user, callback }: AuthActionArg): void => {
       isSignedIn: user.isSignedIn(),
       name: profile.getName(),
       email: profile.getEmail(),
-      profileImageUrl: profile.getImageUrl(),
+      profileImageUrl: profile.getImageUrl()
     })
   }
 }

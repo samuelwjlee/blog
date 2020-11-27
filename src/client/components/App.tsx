@@ -17,25 +17,25 @@ const useStyles = createUseStyles({
       display: 'flex',
       flexDirection: 'column',
       width: '100vw',
-      height: '100vh',
+      height: '100vh'
     },
     '#root': {
       width: '100vw',
-      height: '100vh',
-    },
+      height: '100vh'
+    }
   },
   content: {
     ...BODY_WIDTH_MIN_MAX,
     margin: 'auto',
     paddingBottom: 80
-  },
+  }
 })
 
 const App: React.FC = () => {
   const classes = useStyles()
 
   return (
-    <div className='App'>
+    <div className="App">
       <Header />
       <div className={classes.content}>
         <Dashboard />
