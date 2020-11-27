@@ -10,7 +10,11 @@ import {
   signInGoogleUser,
   signOutGoogleUser
 } from 'client/utils/auth.utils'
-import { HEADER_HEIGHT } from 'client/constants/style.constants'
+import {
+  AUTH_ELE_ZINDEX,
+  AUTH_SCREEN_ZINDEX,
+  HEADER_HEIGHT
+} from 'client/constants/style.constants'
 import { GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants'
 import Avatar from 'client/assets/avatar-icon.png'
 
@@ -21,7 +25,8 @@ const useStyles = createUseStyles({
     width: 45,
     backgroundImage: (profileImageUrl: string | null) =>
       `url(${profileImageUrl ?? Avatar})`,
-    backgroundSize: 'cover'
+    backgroundSize: 'cover',
+    zIndex: AUTH_ELE_ZINDEX
   },
   authDropdown: {
     position: 'absolute',
@@ -47,6 +52,15 @@ const useStyles = createUseStyles({
     width: 100,
     height: 25,
     margin: 5
+  },
+  screen: {
+    width: '100vw',
+    height: '100vh',
+    top: 0,
+    left: 0,
+    position: 'absolute',
+    background: 'transparent',
+    zIndex: AUTH_SCREEN_ZINDEX
   }
 })
 
@@ -86,31 +100,39 @@ const Auth: React.FC = () => {
   }, [isAuthOpen, user.isSignedIn])
 
   return (
-    <div
-      role="button"
-      onClick={() => setIsAuthOpen(!isAuthOpen)}
-      className={classes.authIconButton}
-    >
+    <>
+      <div
+        role="button"
+        onClick={e => {
+          e.stopPropagation()
+          setIsAuthOpen(!isAuthOpen)
+        }}
+        className={classes.authIconButton}
+      >
+        {isAuthOpen && (
+          <div className={classes.authDropdown}>
+            {user.isSignedIn ? (
+              <>
+                <AuthProfile {...user} />
+                <div className={classes.authAction}>
+                  <button
+                    className={classes.signOutButton}
+                    onClick={handleSignOut}
+                  >
+                    Sign out
+                  </button>
+                </div>
+              </>
+            ) : (
+              <AuthGoogleButton />
+            )}
+          </div>
+        )}
+      </div>
       {isAuthOpen && (
-        <div className={classes.authDropdown}>
-          {user.isSignedIn ? (
-            <>
-              <AuthProfile {...user} />
-              <div className={classes.authAction}>
-                <button
-                  className={classes.signOutButton}
-                  onClick={handleSignOut}
-                >
-                  Sign out
-                </button>
-              </div>
-            </>
-          ) : (
-            <AuthGoogleButton />
-          )}
-        </div>
+        <div className={classes.screen} onClick={() => setIsAuthOpen(false)} />
       )}
-    </div>
+    </>
   )
 }
 

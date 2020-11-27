@@ -7,7 +7,8 @@ const useStyles = createUseStyles({
   profileContainer: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    zIndex: 2
   },
   profileImage: {
     borderRadius: '50%',

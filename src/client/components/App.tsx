@@ -31,6 +31,11 @@ const useStyles = createUseStyles({
   }
 })
 
+/**
+ * TODO:
+ * 1. wrap comps with hook+context to provide auth values
+ * 2. move mapping logic into Word comp
+ */
 const App: React.FC = () => {
   const classes = useStyles()
 
