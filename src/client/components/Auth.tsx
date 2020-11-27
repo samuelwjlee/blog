@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { MouseEvent, useEffect, useState } from 'react'
 import { createUseStyles } from 'react-jss'
 
 import AuthGoogleButton from 'client/components/AuthGoogleButton'
@@ -85,6 +85,12 @@ const Auth: React.FC = () => {
     signOutGoogleUser({ user: InitialUserState, callback: setUser })
   }
 
+  const toggleAuthDropdown = (e: MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      setIsAuthOpen(!isAuthOpen)
+    }
+  }
+
   useEffect(() => {
     loadGoogleOAuthScript(handleSignIn)
   }, [])
@@ -103,10 +109,7 @@ const Auth: React.FC = () => {
     <>
       <div
         role="button"
-        onClick={e => {
-          e.stopPropagation()
-          setIsAuthOpen(!isAuthOpen)
-        }}
+        onClick={toggleAuthDropdown}
         className={classes.authIconButton}
       >
         {isAuthOpen && (
@@ -130,7 +133,7 @@ const Auth: React.FC = () => {
         )}
       </div>
       {isAuthOpen && (
-        <div className={classes.screen} onClick={() => setIsAuthOpen(false)} />
+        <div className={classes.screen} onClick={toggleAuthDropdown} />
       )}
     </>
   )
