@@ -1,60 +1,66 @@
-import React, { useEffect, useState } from 'react';
-import { createUseStyles } from 'react-jss'
+import React, { useEffect, useState } from "react";
+import { createUseStyles } from "react-jss";
 
-import AuthGoogleButton from 'client/components/AuthGoogleButton';
-import AuthProfile from 'client/components/AuthProfile';
-import { GoogleUser, User } from 'client/types/auth.types';
-import { loadGoogleOAuthScript, renderGoogleOAuthButton, signInGoogleUser, signOutGoogleUser } from 'client/utils/auth.utils';
-import { HEADER_HEIGHT } from 'client/constants/style.constants';
-import { GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants';
-import Avatar from 'client/assets/avatar-icon.png';
+import AuthGoogleButton from "client/components/AuthGoogleButton";
+import AuthProfile from "client/components/AuthProfile";
+import { GoogleUser, User } from "client/types/auth.types";
+import {
+  loadGoogleOAuthScript,
+  renderGoogleOAuthButton,
+  signInGoogleUser,
+  signOutGoogleUser,
+} from "client/utils/auth.utils";
+import { HEADER_HEIGHT } from "client/constants/style.constants";
+import { GOOGLE_OAUTH_BUTTON_ID } from "client/constants/auth.constants";
+import Avatar from "client/assets/avatar-icon.png";
 
 const useStyles = createUseStyles({
   authIconButton: {
-    borderRadius: '50%',
+    borderRadius: "50%",
     height: 45,
     width: 45,
-    backgroundImage: (profileImageUrl: string | null) => `url(${profileImageUrl ?? Avatar})`,
-    backgroundSize: 'cover'
+    backgroundImage: (profileImageUrl: string | null) =>
+      `url(${profileImageUrl ?? Avatar})`,
+    backgroundSize: "cover",
   },
   authDropdown: {
-    position: 'absolute',
+    position: "absolute",
     top: HEADER_HEIGHT,
     right: 15,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    border: '1px solid black',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    border: "1px solid black",
     padding: 30,
     minWidth: 280,
     minHeight: 135,
     [`& #${GOOGLE_OAUTH_BUTTON_ID}`]: {
-      margin: 'auto'
-    }
+      margin: "auto",
+    },
   },
   authAction: {
-    display: 'flex',
-    justifyContent: 'center',
-    marginTop: 10
+    display: "flex",
+    justifyContent: "center",
+    marginTop: 10,
   },
   signOutButton: {
     width: 100,
     height: 25,
-    margin: 5
-  }
+    margin: 5,
+  },
 });
 
 const InitialUserState = {
   isSignedIn: false,
   name: null,
   email: null,
-  profileImageUrl: null
+  profileImageUrl: null,
 };
 
 const Auth: React.FC = () => {
   /* TODO: move user object to redux store to be globally referenced */
-  const [ user, setUser ] = useState<User>(InitialUserState);
-  const [ isAuthOpen, setIsAuthOpen ] = useState<boolean>(false);
+  const [user, setUser] = useState<User>(InitialUserState);
+  const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
   const classes = useStyles(user.profileImageUrl);
 
   const handleSignIn = (googleUser: GoogleUser): void => {
@@ -77,34 +83,35 @@ const Auth: React.FC = () => {
     if (isAuthOpen && !user.isSignedIn) {
       renderGoogleOAuthButton(handleSignIn);
     }
-  }, [ isAuthOpen, user.isSignedIn ]);
+  }, [isAuthOpen, user.isSignedIn]);
 
   return (
     <div
-      role='button'
+      role="button"
       onClick={() => setIsAuthOpen(!isAuthOpen)}
-      className={classes.authIconButton}>
-      {
-        isAuthOpen &&
-          <div className={classes.authDropdown}>
-            {
-              user.isSignedIn
-                ? <>
-                    <AuthProfile {...user} />
-                    <div className={classes.authAction}>
-                      <button
-                        className={classes.signOutButton}
-                        onClick={handleSignOut}>
-                          Sign out
-                      </button>
-                    </div>
-                </>
-                : <AuthGoogleButton />
-            }
-          </div>
-      }
+      className={classes.authIconButton}
+    >
+      {isAuthOpen && (
+        <div className={classes.authDropdown}>
+          {user.isSignedIn ? (
+            <>
+              <AuthProfile {...user} />
+              <div className={classes.authAction}>
+                <button
+                  className={classes.signOutButton}
+                  onClick={handleSignOut}
+                >
+                  Sign out
+                </button>
+              </div>
+            </>
+          ) : (
+            <AuthGoogleButton />
+          )}
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default Auth;
