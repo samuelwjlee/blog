@@ -1,6 +1,6 @@
-import { Words } from 'client/types/word.types'
+import { WordDef } from 'client/types/word.types'
 
-export const mockWords: Words = {
+export const mockWordDef: WordDef = {
   barter: 'exchange goods without involving money',
   wistful: 'vaguely longing, sadly thoughtful',
   contrived: 'artificial; labored',

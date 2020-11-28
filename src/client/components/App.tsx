@@ -3,9 +3,10 @@ import { createUseStyles } from 'react-jss'
 
 import Header from 'client/components/Header'
 import Dashboard from 'client/components/Dashboard'
-import Word from 'client/components/Word'
-import { mockWords } from '__mocks__/word.mocks'
+import WordList from 'client/components/WordList'
+import { mockWordDef } from '__mocks__/word.mocks'
 import { BODY_WIDTH_MIN_MAX } from 'client/constants/style.constants'
+import { UserContext, userContextDefaultValue } from 'client/hooks/userContext'
 
 const useStyles = createUseStyles({
   '@global': {
@@ -34,25 +35,18 @@ const useStyles = createUseStyles({
 /**
  * TODO:
  * 1. wrap comps with hook+context to provide auth values
- * 2. move mapping logic into Word comp
  */
 const App: React.FC = () => {
   const classes = useStyles()
 
   return (
-    <div className="App">
+    <UserContext.Provider value={userContextDefaultValue}>
       <Header />
       <div className={classes.content}>
         <Dashboard />
-        {Object.keys(mockWords).map((word, idx) => (
-          <Word
-            key={`word-${word}-${idx}`}
-            word={word}
-            definition={mockWords[word]}
-          />
-        ))}
+        <WordList wordDef={mockWordDef} />
       </div>
-    </div>
+    </UserContext.Provider>
   )
 }
 
