@@ -8,15 +8,17 @@ import {
 export const renderGoogleOAuthButton = (
   handleSignIn: handleGoogleUserSignIn
 ): void => {
-  ;(window as any).gapi.signin2.render(GOOGLE_OAUTH_BUTTON_ID, {
-    scope: 'profile email',
-    width: 240,
-    height: 50,
-    longtitle: true,
-    theme: 'dark',
-    onsuccess: handleSignIn,
-    onfailure: console.log
-  })
+  if (document.getElementById(GOOGLE_OAUTH_BUTTON_ID)) {
+    ;(window as any).gapi.signin2.render(GOOGLE_OAUTH_BUTTON_ID, {
+      scope: 'profile email',
+      width: 240,
+      height: 50,
+      longtitle: true,
+      theme: 'dark',
+      onsuccess: handleSignIn,
+      onfailure: console.log
+    })
+  }
 }
 
 const handleGoogleOAuthOnLoad = (

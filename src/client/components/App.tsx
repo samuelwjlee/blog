@@ -7,6 +7,7 @@ import WordList from 'client/components/WordList'
 import { mockWordDef } from '__mocks__/word.mocks'
 import { BODY_WIDTH_MIN_MAX } from 'client/constants/style.constants'
 import { UserContext, useUserContextVal } from 'client/hooks/userContext'
+import WelcomePage from 'client/components/WelcomePage'
 
 const useStyles = createUseStyles({
   '@global': {
@@ -39,11 +40,13 @@ const App: React.FC = () => {
   return (
     <UserContext.Provider value={userContextValue}>
       <Header />
-      {userContextValue.user.isSignedIn && (
+      {userContextValue.user.isSignedIn ? (
         <div className={classes.signedInContent}>
           <Dashboard />
           <WordList wordDef={mockWordDef} />
         </div>
+      ) : (
+        <WelcomePage />
       )}
     </UserContext.Provider>
   )
