@@ -3,13 +3,7 @@ import { createUseStyles } from 'react-jss'
 
 import AuthGoogleButton from 'client/components/AuthGoogleButton'
 import AuthProfile from 'client/components/AuthProfile'
-import { GoogleUser, User } from 'client/types/auth.types'
-import {
-  loadGoogleOAuthScript,
-  renderGoogleOAuthButton,
-  signInGoogleUser,
-  signOutGoogleUser
-} from 'client/utils/auth.utils'
+import { renderGoogleOAuthButton } from 'client/utils/auth.utils'
 import {
   AUTH_ELE_ZINDEX,
   AUTH_SCREEN_ZINDEX,
@@ -17,6 +11,7 @@ import {
 } from 'client/constants/style.constants'
 import { GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants'
 import Avatar from 'client/assets/avatar-icon.png'
+import { useUserContextValue } from 'client/hooks/userContext'
 
 const useStyles = createUseStyles({
   authIconButton: {
@@ -64,52 +59,36 @@ const useStyles = createUseStyles({
   }
 })
 
-const InitialUserState = {
-  isSignedIn: false,
-  name: null,
-  email: null,
-  profileImageUrl: null
-}
-
 const Auth: React.FC = () => {
-  /* TODO: move user object to redux store to be globally referenced */
-  const [user, setUser] = useState<User>(InitialUserState)
+  const { user, handleSignIn, handleSignOut } = useUserContextValue()
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false)
   const classes = useStyles(user.profileImageUrl)
 
-  const handleSignIn = (googleUser: GoogleUser): void => {
-    signInGoogleUser({ user: googleUser, callback: setUser })
-  }
-
-  const handleSignOut = (): void => {
-    signOutGoogleUser({ user: InitialUserState, callback: setUser })
-  }
-
-  const toggleAuthDropdown = (e: MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      setIsAuthOpen(!isAuthOpen)
-    }
-  }
-
-  useEffect(() => {
-    loadGoogleOAuthScript(handleSignIn)
-  }, [])
-
   /**
-   * need to do a fresh google oAuth re-render
-   * since google oauth button element re-mounted
+   * button needs to be re-rendered when re-mounted
    */
   useEffect(() => {
     if (isAuthOpen && !user.isSignedIn) {
       renderGoogleOAuthButton(handleSignIn)
     }
-  }, [isAuthOpen, user.isSignedIn])
+  }, [isAuthOpen, user.isSignedIn, handleSignIn])
+
+  /**
+   * close authDropdown when change in isSignedIn
+   */
+  useEffect(() => setIsAuthOpen(false), [user.isSignedIn])
+
+  const handleAuthButtonClick = (e: MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      setIsAuthOpen(!isAuthOpen)
+    }
+  }
 
   return (
     <>
       <div
         role="button"
-        onClick={toggleAuthDropdown}
+        onClick={handleAuthButtonClick}
         className={classes.authIconButton}
       >
         {isAuthOpen && (
@@ -133,7 +112,7 @@ const Auth: React.FC = () => {
         )}
       </div>
       {isAuthOpen && (
-        <div className={classes.screen} onClick={toggleAuthDropdown} />
+        <div className={classes.screen} onClick={handleAuthButtonClick} />
       )}
     </>
   )
