@@ -34,13 +34,13 @@ const useStyles = createUseStyles({
 })
 
 const App: React.FC = () => {
-  const userContextValue = useUserContextVal()
+  const userContextVal = useUserContextVal()
   const classes = useStyles()
 
   return (
-    <UserContext.Provider value={userContextValue}>
+    <UserContext.Provider value={userContextVal}>
       <Header />
-      {userContextValue.user.isSignedIn ? (
+      {userContextVal.user.isSignedIn ? (
         <div className={classes.signedInContent}>
           <Dashboard />
           <WordList wordDef={mockWordDef} />
