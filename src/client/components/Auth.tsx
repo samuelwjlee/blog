@@ -84,7 +84,7 @@ const Auth: React.FC = () => {
     }
   }
 
-  return (
+  return user.isSignedIn ? (
     <>
       <div
         role="button"
@@ -115,7 +115,7 @@ const Auth: React.FC = () => {
         <div className={classes.screen} onClick={handleAuthButtonClick} />
       )}
     </>
-  )
+  ) : null
 }
 
 export default Auth
