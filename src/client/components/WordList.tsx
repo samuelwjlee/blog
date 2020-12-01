@@ -1,7 +1,7 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
 
-import { WordDef } from 'client/types/word.types'
+import { Words } from 'client/types/word.types'
 
 const COMMON_WORD_DEF_STYLE = {
   padding: '20px 10px 20px 30px',
@@ -22,7 +22,14 @@ const useStyles = createUseStyles({
     ...COMMON_WORD_DEF_STYLE,
     fontSize: 30,
     fontWeight: 'bold',
-    background: '#0001'
+    background: '#0001',
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  function: {
+    fontSize: 15,
+    fontWeight: 'normal',
+    padding: '0px 20px'
   },
   definition: {
     ...COMMON_WORD_DEF_STYLE,
@@ -32,27 +39,36 @@ const useStyles = createUseStyles({
 
 type WordProps = {
   word: string
+  func: string
   def: string
 }
-const Word: React.FC<WordProps> = ({ word, def }) => {
+const Word: React.FC<WordProps> = ({ word, def, func }) => {
   const classes = useStyles()
 
   return (
     <div className={classes.wordContainer}>
-      <div className={classes.word}>{word}</div>
+      <div className={classes.word}>
+        {word}
+        <div className={classes.function}>{func}</div>
+      </div>
       <div className={classes.definition}>{def}</div>
     </div>
   )
 }
 
 type WordListProps = {
-  wordDef: WordDef
+  words: Words
 }
-const WordList: React.FC<WordListProps> = ({ wordDef }) => {
+const WordList: React.FC<WordListProps> = ({ words }) => {
   return (
     <>
-      {Object.keys(wordDef).map((word, idx) => (
-        <Word word={word} def={wordDef[word]} key={`${word}-${idx}`} />
+      {Object.keys(words).map((word, idx) => (
+        <Word
+          word={word}
+          def={words[word]?.definition}
+          func={words[word]?.function}
+          key={`${word}-${idx}`}
+        />
       ))}
     </>
   )

@@ -1,3 +1,6 @@
-export type WordDef = {
-  [word: string]: string
+export type Words = {
+  [word: string]: {
+    definition: string
+    function: string
+  }
 }

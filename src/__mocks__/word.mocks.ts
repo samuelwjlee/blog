@@ -1,9 +1,24 @@
-import { WordDef } from 'client/types/word.types'
+import { Words } from 'client/types/word.types'
 
-export const mockWordDef: WordDef = {
-  barter: 'exchange goods without involving money',
-  wistful: 'vaguely longing, sadly thoughtful',
-  contrived: 'artificial; labored',
-  balk: 'refuse to proceed or to do something',
-  vacilitate: 'fluctuating, wavering'
+export const mockWords: Words = {
+  barter: {
+    definition: 'exchange goods without involving money',
+    function: 'verb'
+  },
+  wistful: {
+    definition: 'vaguely longing, sadly thoughtful',
+    function: 'adjective'
+  },
+  contrived: {
+    definition: 'artificial; labored',
+    function: 'adjective'
+  },
+  balk: {
+    definition: 'refuse to proceed or to do something',
+    function: 'verb'
+  },
+  vacilitate: {
+    definition: 'fluctuating, wavering',
+    function: 'intransitive verb'
+  }
 }

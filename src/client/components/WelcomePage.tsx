@@ -11,7 +11,7 @@ const useStyles = createUseStyles({
     alignItems: 'center',
     paddingBottom: 80
   },
-  appDescription: {
+  description: {
     fontSize: 30,
     fontWeight: 'bold',
     textAlign: 'center',
@@ -25,7 +25,7 @@ const WelcomePage: React.FC = () => {
 
   return (
     <div className={classes.welcomePage}>
-      <div className={classes.appDescription}>
+      <div className={classes.description}>
         Learn new words while having fun
       </div>
       <AuthGoogleButton />

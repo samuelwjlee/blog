@@ -25,14 +25,14 @@ const useStyles = createUseStyles({
   },
   authDropdown: {
     position: 'absolute',
-    top: HEADER_HEIGHT,
-    right: 15,
+    top: HEADER_HEIGHT - 15,
+    right: 30,
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     border: '1px solid black',
     padding: 30,
-    minWidth: 280,
+    minWidth: 250,
     minHeight: 135,
     [`& #${GOOGLE_OAUTH_BUTTON_ID}`]: {
       margin: 'auto'
