@@ -2,7 +2,7 @@ import React from 'react'
 import { createUseStyles } from 'react-jss'
 
 import Header from 'client/components/Header'
-import Dashboard from 'client/components/Dashboard'
+// import Dashboard from 'client/components/Dashboard'
 import WordList from 'client/components/WordList'
 import { mockWords } from '__mocks__/word.mocks'
 import { BODY_WIDTH_MIN_MAX } from 'client/constants/style.constants'
@@ -42,7 +42,7 @@ const App: React.FC = () => {
       <Header />
       {userContextVal.user.isSignedIn ? (
         <div className={classes.signedInContent}>
-          <Dashboard />
+          {/* <Dashboard /> */}
           <WordList words={mockWords} />
         </div>
       ) : (
