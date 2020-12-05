@@ -4,7 +4,6 @@ import { createUseStyles } from 'react-jss'
 import Header from 'client/components/Header'
 // import Dashboard from 'client/components/Dashboard'
 import WordList from 'client/components/WordList'
-import { mockWords } from '__mocks__/word.mocks'
 import { BODY_WIDTH_MIN_MAX } from 'client/constants/style.constants'
 import { UserContext, useUserContextVal } from 'client/hooks/userContext'
 import WelcomePage from 'client/components/WelcomePage'
@@ -43,7 +42,7 @@ const App: React.FC = () => {
       {userContextVal.user.isSignedIn ? (
         <div className={classes.signedInContent}>
           {/* <Dashboard /> */}
-          <WordList words={mockWords} />
+          <WordList words={userContextVal.words} />
         </div>
       ) : (
         <WelcomePage />

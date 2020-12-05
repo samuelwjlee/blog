@@ -6,6 +6,7 @@ import {
   signInGoogleUser,
   signOutGoogleUser
 } from 'client/utils/auth.utils'
+import { Words } from 'client/types/word.types'
 
 const initUserState = {
   isSignedIn: false,
@@ -17,17 +18,20 @@ const initUserState = {
 const userContextDefaultVal = {
   user: initUserState,
   handleSignIn: () => {},
-  handleSignOut: () => {}
+  handleSignOut: () => {},
+  words: {}
 }
 
 type UserContextVal = {
   user: User
   handleSignIn: (googleUser: GoogleUser) => void
   handleSignOut: () => void
+  words: Words
 }
 
 export function useUserContextVal(): UserContextVal {
   const [user, setUser] = useState<User>(initUserState)
+  const [words, setWords] = useState<Words>({})
 
   const handleSignIn = (googleUser: GoogleUser): void => {
     signInGoogleUser({ user: googleUser, callback: setUser })
@@ -37,14 +41,24 @@ export function useUserContextVal(): UserContextVal {
     signOutGoogleUser({ user: initUserState, callback: setUser })
   }
 
+  const fetchWords = async () => {
+    const fetchedWords = await fetch('/words')
+      .then(res => res.json())
+      .catch(console.log)
+
+    setWords(fetchedWords)
+  }
+
   useEffect(() => {
     loadGoogleOAuthScript(handleSignIn)
+    fetchWords()
   }, [])
 
   return {
     user,
     handleSignIn,
-    handleSignOut
+    handleSignOut,
+    words
   }
 }
 
