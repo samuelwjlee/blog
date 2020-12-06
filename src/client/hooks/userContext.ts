@@ -41,8 +41,8 @@ export function useUserContextVal(): UserContextVal {
     signOutGoogleUser({ user: initUserState, callback: setUser })
   }
 
-  const fetchWords = async () => {
-    const fetchedWords = await fetch('/words')
+  const fetchWords = async (email: string) => {
+    const fetchedWords = await fetch(`/words?userId=${email}`)
       .then(res => res.json())
       .catch(console.log)
 
@@ -51,8 +51,13 @@ export function useUserContextVal(): UserContextVal {
 
   useEffect(() => {
     loadGoogleOAuthScript(handleSignIn)
-    fetchWords()
   }, [])
+
+  useEffect(() => {
+    if (user.isSignedIn && user.email) {
+      fetchWords(user.email)
+    }
+  }, [user])
 
   return {
     user,

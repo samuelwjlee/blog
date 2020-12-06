@@ -24,5 +24,7 @@ const words = {
 }
 
 exports.wordsGet = async (req, res) => {
+  const userId = req.query.userId
+  // get words tied to userId
   res.json(words)
 }

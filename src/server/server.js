@@ -19,12 +19,6 @@ app.use(bodyParser.json())
 
 app.use('/words', wordRouter)
 
-app.use((err, req, res, next) => {
-  console.error(err.stack)
-
-  res.status(500).send('Something broke!')
-})
-
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`)
 })
