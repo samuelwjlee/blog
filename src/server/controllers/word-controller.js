@@ -1,5 +1,3 @@
-// const { words } = require('__mocks__/word.mocks')
-
 const words = {
   barter: {
     definition: 'exchange goods without involving money',

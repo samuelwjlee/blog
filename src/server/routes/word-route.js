@@ -1,8 +1,6 @@
 const express = require('express')
-
-const wordController = require('../controllers/word-controller')
-
 const router = express.Router()
+const wordController = require('../controllers/word-controller')
 
 router.get('/', wordController.wordsGet)
 

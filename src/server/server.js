@@ -1,5 +1,4 @@
 const express = require('express')
-
 const wordRouter = require('./routes/word-route')
 
 const bodyParser = require('body-parser')
@@ -18,6 +17,11 @@ app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use('/words', wordRouter)
+
+const db = require('./app/models')
+db.sequelize.sync({ force: true }).then(() => {
+  console.log('Drop and re-sync db.')
+})
 
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`)
