@@ -1,3 +1,6 @@
+// list of word object example
+// [ { name: 'someword', definition: 'some def', type: 'verb' } ]
+
 const words = {
   barter: {
     definition: 'exchange goods without involving money',

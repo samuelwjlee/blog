@@ -70,5 +70,3 @@ export function useUserContextVal(): UserContextVal {
 export const UserContext = React.createContext<UserContextVal>(
   userContextDefaultVal
 )
-
-// https://wanago.io/2020/09/28/react-context-api-hooks-typescript/

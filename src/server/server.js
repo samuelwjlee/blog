@@ -18,13 +18,6 @@ app.use(bodyParser.json())
 
 app.use('/words', wordRouter)
 
-const db = require('./app/models')
-db.sequelize.sync({ force: true }).then(() => {
-  console.log('Drop and re-sync db.')
-})
-
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`)
 })
-
-// https://blog.alexdevero.com/build-react-app-express-api/
