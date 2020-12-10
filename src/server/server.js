@@ -1,5 +1,6 @@
 const express = require('express')
 const wordRouter = require('./routes/word-route')
+const userRouter = require('./routes/user-route')
 
 const bodyParser = require('body-parser')
 const compression = require('compression')
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 app.use('/words', wordRouter)
+app.use('/users', userRouter)
 
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`)

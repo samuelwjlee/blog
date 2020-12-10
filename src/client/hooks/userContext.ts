@@ -6,7 +6,7 @@ import {
   signInGoogleUser,
   signOutGoogleUser
 } from 'client/utils/auth.utils'
-import { Words } from 'client/types/word.types'
+import { Word } from 'client/types/word.types'
 
 const initUserState = {
   isSignedIn: false,
@@ -19,19 +19,19 @@ const userContextDefaultVal = {
   user: initUserState,
   handleSignIn: () => {},
   handleSignOut: () => {},
-  words: {}
+  words: []
 }
 
 type UserContextVal = {
   user: User
   handleSignIn: (googleUser: GoogleUser) => void
   handleSignOut: () => void
-  words: Words
+  words: Word[]
 }
 
 export function useUserContextVal(): UserContextVal {
   const [user, setUser] = useState<User>(initUserState)
-  const [words, setWords] = useState<Words>({})
+  const [words, setWords] = useState<Word[]>([])
 
   const handleSignIn = (googleUser: GoogleUser): void => {
     signInGoogleUser({ user: googleUser, callback: setUser })
@@ -41,12 +41,20 @@ export function useUserContextVal(): UserContextVal {
     signOutGoogleUser({ user: initUserState, callback: setUser })
   }
 
-  const fetchWords = async (email: string) => {
-    const fetchedWords = await fetch(`/words?userId=${email}`)
+  const fetchWords = async () => {
+    const fetchedWords = await fetch('/words')
       .then(res => res.json())
       .catch(console.log)
 
     setWords(fetchedWords)
+  }
+
+  const fetchUser = async () => {
+    const fetchedUsers = await fetch('/users')
+      .then(res => res.json())
+      .catch(console.log)
+
+    console.log(fetchedUsers)
   }
 
   useEffect(() => {
@@ -55,7 +63,8 @@ export function useUserContextVal(): UserContextVal {
 
   useEffect(() => {
     if (user.isSignedIn && user.email) {
-      fetchWords(user.email)
+      fetchWords()
+      fetchUser()
     }
   }, [user])
 

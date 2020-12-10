@@ -1,24 +1,29 @@
-import { Words } from 'client/types/word.types'
+import { Word } from 'client/types/word.types'
 
-export const mockWords: Words = {
-  barter: {
+export const mockWords: Word[] = [
+  {
+    name: 'barter',
     definition: 'exchange goods without involving money',
     function: 'verb'
   },
-  wistful: {
+  {
+    name: 'wistful',
     definition: 'vaguely longing, sadly thoughtful',
     function: 'adjective'
   },
-  contrived: {
+  {
+    name: 'contrived',
     definition: 'artificial; labored',
     function: 'adjective'
   },
-  balk: {
+  {
+    name: 'balk',
     definition: 'refuse to proceed or to do something',
     function: 'verb'
   },
-  vacilitate: {
+  {
+    name: 'vacilitate',
     definition: 'fluctuating, wavering',
     function: 'intransitive verb'
   }
-}
+]

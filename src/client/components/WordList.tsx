@@ -1,7 +1,7 @@
 import React from 'react'
 import { createUseStyles } from 'react-jss'
 
-import { Words } from 'client/types/word.types'
+import { Word } from 'client/types/word.types'
 
 const COMMON_WORD_DEF_STYLE = {
   padding: '20px 10px 20px 30px',
@@ -42,7 +42,7 @@ type WordProps = {
   func: string
   def: string
 }
-const Word: React.FC<WordProps> = ({ word, def, func }) => {
+const WordCard: React.FC<WordProps> = ({ word, def, func }) => {
   const classes = useStyles()
 
   return (
@@ -57,16 +57,16 @@ const Word: React.FC<WordProps> = ({ word, def, func }) => {
 }
 
 type WordListProps = {
-  words: Words
+  words: Word[]
 }
 const WordList: React.FC<WordListProps> = ({ words }) => {
   return (
     <>
-      {Object.keys(words).map((word, idx) => (
-        <Word
-          word={word}
-          def={words[word]?.definition}
-          func={words[word]?.function}
+      {words.map((word, idx) => (
+        <WordCard
+          word={word.name}
+          def={word.definition}
+          func={word.function}
           key={`${word}-${idx}`}
         />
       ))}

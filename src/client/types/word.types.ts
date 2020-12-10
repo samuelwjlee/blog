@@ -1,6 +1,5 @@
-export type Words = {
-  [word: string]: {
-    definition: string
-    function: string
-  }
+export type Word = {
+  name: string
+  definition: string
+  function: string
 }
