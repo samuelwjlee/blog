@@ -42,19 +42,11 @@ export function useUserContextVal(): UserContextVal {
   }
 
   const fetchWords = async () => {
-    const fetchedWords = await fetch('/words')
+    const fetchedWords = await fetch(`/words?userId=${user.email}`)
       .then(res => res.json())
       .catch(console.log)
 
     setWords(fetchedWords)
-  }
-
-  const fetchUser = async () => {
-    const fetchedUsers = await fetch('/users')
-      .then(res => res.json())
-      .catch(console.log)
-
-    console.log(fetchedUsers)
   }
 
   useEffect(() => {
@@ -64,7 +56,6 @@ export function useUserContextVal(): UserContextVal {
   useEffect(() => {
     if (user.isSignedIn && user.email) {
       fetchWords()
-      fetchUser()
     }
   }, [user])
 

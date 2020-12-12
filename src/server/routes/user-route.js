@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const userController = require('../controllers/user-controller')
 
-router.get('/', userController.userGetAll)
-router.get('/words', userController.userGetWords)
+router.get('/', userController.userGet)
 
 module.exports = router

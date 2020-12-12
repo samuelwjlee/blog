@@ -29,7 +29,7 @@ VALUES  ('samuelwjlee@gmail.com');
 CREATE TABLE user_words (
   ID SERIAL PRIMARY KEY,
   user_id VARCHAR(255) NOT NULL,
-  words_id VARCHAR(255) NOT NULL
+  words_id INT NOT NULL
 );
 
 INSERT INTO user_words (user_id, words_id)
