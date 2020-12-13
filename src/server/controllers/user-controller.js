@@ -1,6 +1,6 @@
 const { pool } = require('../config')
 
-exports.userGet = (req, res) => {
+exports.getUser = (req, res) => {
   /**
    * create user if user not in db
    */

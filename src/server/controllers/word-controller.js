@@ -1,8 +1,8 @@
 const { pool } = require('../config')
 
-exports.wordsGet = (req, res) => {
+exports.getUserWords = (req, res) => {
   pool.query(
-    `SELECT words.id, words.name, words.definition, words.function from words INNER JOIN (SELECT * from user_words WHERE user_id='${req.query.userId}') AS user_words ON words.id=user_words.words_id`,
+    `SELECT words.id, words.name, words.definition, words.function from words INNER JOIN (SELECT * from user_words WHERE user_id='${req.query.id}') AS user_words ON words.id=user_words.words_id`,
     (error, results) => {
       if (error) {
         throw error
@@ -10,4 +10,13 @@ exports.wordsGet = (req, res) => {
       res.status(200).json(results.rows)
     }
   )
+}
+
+exports.getAllWords = (req, res) => {
+  pool.query('SELECT * from words', (error, results) => {
+    if (error) {
+      throw error
+    }
+    res.status(200).json(results.rows)
+  })
 }

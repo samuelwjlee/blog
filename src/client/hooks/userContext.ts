@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import { GoogleUser, User } from 'client/types/auth.types'
 import {
@@ -41,13 +41,13 @@ export function useUserContextVal(): UserContextVal {
     signOutGoogleUser({ user: initUserState, callback: setUser })
   }
 
-  const fetchWords = async () => {
-    const fetchedWords = await fetch(`/words?userId=${user.email}`)
+  const fetchUserClaimedWords = useCallback(async () => {
+    const fetchedWords = await fetch(`/words/user?id=${user.email}`)
       .then(res => res.json())
       .catch(console.log)
 
     setWords(fetchedWords)
-  }
+  }, [user])
 
   useEffect(() => {
     loadGoogleOAuthScript(handleSignIn)
@@ -55,9 +55,9 @@ export function useUserContextVal(): UserContextVal {
 
   useEffect(() => {
     if (user.isSignedIn && user.email) {
-      fetchWords()
+      fetchUserClaimedWords()
     }
-  }, [user])
+  }, [user, fetchUserClaimedWords])
 
   return {
     user,

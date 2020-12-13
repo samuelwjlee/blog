@@ -7,6 +7,7 @@ import WordList from 'client/components/WordList'
 import { BODY_WIDTH_MIN_MAX } from 'client/constants/style.constants'
 import { UserContext, useUserContextVal } from 'client/hooks/userContext'
 import WelcomePage from 'client/components/WelcomePage'
+import AutoComplete from 'client/components/AutoComplete'
 
 const useStyles = createUseStyles({
   '@global': {
@@ -42,6 +43,7 @@ const App: React.FC = () => {
       {userContextVal.user.isSignedIn ? (
         <div className={classes.signedInContent}>
           {/* <Dashboard /> */}
+          <AutoComplete />
           <WordList words={userContextVal.words} />
         </div>
       ) : (
