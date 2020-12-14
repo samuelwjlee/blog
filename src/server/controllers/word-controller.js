@@ -20,3 +20,17 @@ exports.getAllWords = (req, res) => {
     res.status(200).json(results.rows)
   })
 }
+
+exports.claimWord = (req, res) => {
+  const { userId, wordId } = req.body
+
+  pool.query(
+    `INSERT INTO user_words (user_id, words_id) VALUES ('${userId}', ${wordId})`,
+    (error, results) => {
+      if (error) {
+        throw error
+      }
+      res.status(200).json(results.rows)
+    }
+  )
+}

@@ -19,7 +19,8 @@ const userContextDefaultVal = {
   user: initUserState,
   handleSignIn: () => {},
   handleSignOut: () => {},
-  words: []
+  words: [],
+  fetchUserClaimedWords: () => {}
 }
 
 type UserContextVal = {
@@ -27,6 +28,7 @@ type UserContextVal = {
   handleSignIn: (googleUser: GoogleUser) => void
   handleSignOut: () => void
   words: Word[]
+  fetchUserClaimedWords: () => void
 }
 
 export function useUserContextVal(): UserContextVal {
@@ -63,7 +65,8 @@ export function useUserContextVal(): UserContextVal {
     user,
     handleSignIn,
     handleSignOut,
-    words
+    words,
+    fetchUserClaimedWords
   }
 }
 
