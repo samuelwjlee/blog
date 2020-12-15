@@ -44,7 +44,7 @@ const App: React.FC = () => {
         <div className={classes.signedInContent}>
           {/* <Dashboard /> */}
           <AutoComplete />
-          <WordList words={userContextVal.words} />
+          <WordList words={userContextVal.claimedWords} />
         </div>
       ) : (
         <WelcomePage />

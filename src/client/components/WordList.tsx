@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { createUseStyles } from 'react-jss'
 
 import { Word } from 'client/types/word.types'
+import { UserContext } from 'client/hooks/userContext'
 
 const COMMON_WORD_DEF_STYLE = {
   padding: '20px 10px 20px 30px',
@@ -34,6 +35,11 @@ const useStyles = createUseStyles({
   definition: {
     ...COMMON_WORD_DEF_STYLE,
     fontSize: 15
+  },
+  deleteButton: {
+    width: 50,
+    alignSelf: 'flex-end',
+    marginRight: 20
   }
 })
 
@@ -41,9 +47,11 @@ type WordProps = {
   word: string
   func: string
   def: string
+  id: number
 }
-const WordCard: React.FC<WordProps> = ({ word, def, func }) => {
+const WordCard: React.FC<WordProps> = ({ word, def, func, id }) => {
   const classes = useStyles()
+  const { unClaimWord } = useContext(UserContext)
 
   return (
     <div className={classes.wordContainer}>
@@ -52,6 +60,9 @@ const WordCard: React.FC<WordProps> = ({ word, def, func }) => {
         <div className={classes.function}>{func}</div>
       </div>
       <div className={classes.definition}>{def}</div>
+      <button className={classes.deleteButton} onClick={() => unClaimWord(id)}>
+        delete
+      </button>
     </div>
   )
 }
@@ -64,6 +75,7 @@ const WordList: React.FC<WordListProps> = ({ words }) => {
     <>
       {words.map((word, idx) => (
         <WordCard
+          id={word.id}
           word={word.name}
           def={word.definition}
           func={word.function}

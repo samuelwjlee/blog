@@ -15,7 +15,10 @@ const useStyles = createUseStyles({
 const AutoComplete: React.FC = () => {
   const classes = useStyles()
   const [searchedWords, setSearchedWords] = useState<Word[]>([])
-  const { user, fetchUserClaimedWords } = useContext(UserContext)
+  const [claimedWordsHash, setCLaimedWordsHash] = useState<{
+    [word: string]: boolean
+  }>({})
+  const { claimWord, claimedWords } = useContext(UserContext)
 
   const fetchWordSearched = useCallback(async () => {
     const fetchedWords = await fetch('/words/all')
@@ -25,28 +28,28 @@ const AutoComplete: React.FC = () => {
     setSearchedWords(fetchedWords)
   }, [])
 
-  const claimWord = async (wordId: number) => {
-    await fetch('/words/claim', {
-      method: 'POST',
-      headers: { 'Content-type': 'application/json; charset=UTF-8' },
-      body: JSON.stringify({ userId: user.email, wordId })
-    })
-      .then(res => res.json())
-      .catch(console.log)
-
-    await fetchUserClaimedWords()
-  }
-
   useEffect(() => {
     fetchWordSearched()
-  }, [fetchWordSearched])
+    /**
+     * build claimedWordsHash for easier claimed reference
+     */
+    let hash: { [word: string]: boolean } = {}
+    claimedWords.forEach(word => {
+      hash[word.name] = true
+    })
+    setCLaimedWordsHash(hash)
+  }, [fetchWordSearched, claimedWords])
 
   return (
     <>
       {searchedWords.map((word, idx) => (
         <div key={idx} className={classes.result}>
           {word.name}
-          <button onClick={() => claimWord(word.id)}>Add</button>
+          {claimedWordsHash[word.name] !== undefined ? (
+            <div>{'\u2705'}</div> // checkmark
+          ) : (
+            <button onClick={() => claimWord(word.id)}>Add</button>
+          )}
         </div>
       ))}
     </>

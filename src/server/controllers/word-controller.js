@@ -34,3 +34,17 @@ exports.claimWord = (req, res) => {
     }
   )
 }
+
+exports.unClaimWord = (req, res) => {
+  const { userId, wordId } = req.body
+
+  pool.query(
+    `DELETE FROM user_words WHERE user_id='${userId}' AND words_id=${wordId}`,
+    (error, results) => {
+      if (error) {
+        throw error
+      }
+      res.status(200).json(results.rows)
+    }
+  )
+}

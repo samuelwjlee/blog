@@ -19,21 +19,25 @@ const userContextDefaultVal = {
   user: initUserState,
   handleSignIn: () => {},
   handleSignOut: () => {},
-  words: [],
-  fetchUserClaimedWords: () => {}
+  claimedWords: [],
+  fetchUserClaimedWords: () => {},
+  claimWord: (wordId: number) => {},
+  unClaimWord: (wordId: number) => {}
 }
 
 type UserContextVal = {
   user: User
   handleSignIn: (googleUser: GoogleUser) => void
   handleSignOut: () => void
-  words: Word[]
+  claimedWords: Word[]
   fetchUserClaimedWords: () => void
+  claimWord: (wordId: number) => void
+  unClaimWord: (wordId: number) => void
 }
 
 export function useUserContextVal(): UserContextVal {
   const [user, setUser] = useState<User>(initUserState)
-  const [words, setWords] = useState<Word[]>([])
+  const [claimedWords, setClaimedWords] = useState<Word[]>([])
 
   const handleSignIn = (googleUser: GoogleUser): void => {
     signInGoogleUser({ user: googleUser, callback: setUser })
@@ -44,12 +48,38 @@ export function useUserContextVal(): UserContextVal {
   }
 
   const fetchUserClaimedWords = useCallback(async () => {
-    const fetchedWords = await fetch(`/words/user?id=${user.email}`)
+    const fetchedClaimedWords = await fetch(`/words/user?id=${user.email}`)
       .then(res => res.json())
       .catch(console.log)
 
-    setWords(fetchedWords)
+    setClaimedWords(fetchedClaimedWords)
   }, [user])
+
+  const claimWord = async (wordId: number) => {
+    await fetch('/words/claim', {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+      body: JSON.stringify({ userId: user.email, wordId })
+    })
+      .then(res => res.json())
+      .catch(console.log)
+
+    // update dom with new words
+    await fetchUserClaimedWords()
+  }
+
+  const unClaimWord = async (wordId: number) => {
+    await fetch('/words/unclaim', {
+      method: 'DELETE',
+      headers: { 'Content-type': 'application/json; charset=UTF-8' },
+      body: JSON.stringify({ userId: user.email, wordId })
+    })
+      .then(res => res.json())
+      .catch(console.log)
+
+    // update dom with new words
+    await fetchUserClaimedWords()
+  }
 
   useEffect(() => {
     loadGoogleOAuthScript(handleSignIn)
@@ -65,8 +95,10 @@ export function useUserContextVal(): UserContextVal {
     user,
     handleSignIn,
     handleSignOut,
-    words,
-    fetchUserClaimedWords
+    claimedWords,
+    fetchUserClaimedWords,
+    claimWord,
+    unClaimWord
   }
 }
 
