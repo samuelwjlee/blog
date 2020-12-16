@@ -3,6 +3,7 @@ import { createUseStyles } from 'react-jss'
 
 import { Word } from 'client/types/word.types'
 import { UserContext } from 'client/hooks/userContext'
+import { BODY_WIDTH_MIN_MAX } from 'client/constants/style.constants'
 
 const COMMON_WORD_DEF_STYLE = {
   padding: '20px 10px 20px 30px',
@@ -12,6 +13,10 @@ const COMMON_WORD_DEF_STYLE = {
 }
 
 const useStyles = createUseStyles({
+  wordList: {
+    ...BODY_WIDTH_MIN_MAX,
+    padding: 10
+  },
   wordContainer: {
     marginTop: 20,
     border: '1px solid black',
@@ -71,8 +76,9 @@ type WordListProps = {
   words: Word[]
 }
 const WordList: React.FC<WordListProps> = ({ words }) => {
+  const classes = useStyles()
   return (
-    <>
+    <div className={classes.wordList}>
       {words.map((word, idx) => (
         <WordCard
           id={word.id}
@@ -82,7 +88,7 @@ const WordList: React.FC<WordListProps> = ({ words }) => {
           key={`${word}-${idx}`}
         />
       ))}
-    </>
+    </div>
   )
 }
 

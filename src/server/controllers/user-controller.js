@@ -15,3 +15,17 @@ exports.getUser = (req, res) => {
     }
   )
 }
+
+exports.createUser = (req, res) => {
+  const { userId } = req.body
+
+  pool.query(
+    `INSERT INTO users (email) VALUES ('${userId}')`,
+    (error, results) => {
+      if (error) {
+        throw error
+      }
+      res.status(201).json(results.rows)
+    }
+  )
+}
