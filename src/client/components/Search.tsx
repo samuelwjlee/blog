@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { createUseStyles } from 'react-jss'
 
 import { Word } from 'client/types/word.types'
@@ -33,36 +33,51 @@ const Search: React.FC = () => {
   const [claimedWordsHash, setCLaimedWordsHash] = useState<{
     [word: string]: boolean
   }>({})
+  const [query, setQuery] = useState<string>('')
   const { claimWord, claimedWords } = useContext(UserContext)
 
-  const fetchWordSearched = useCallback(async () => {
-    const fetchedWords = await fetch('/words/all')
+  const fetchWordSearched = async (query: string) => {
+    const fetchedWords = await fetch(`/words?query=${query}`)
       .then(res => res.json())
       .catch(console.log)
 
     setSearchedWords(fetchedWords)
-  }, [])
+  }
 
-  useEffect(() => {
-    fetchWordSearched()
+  const buildClaimedWordsHash = () => {
     /**
-     * build claimedWordsHash for easier claimed reference
+     * build claimedWordsHash for easier reference
      */
     let hash: { [word: string]: boolean } = {}
     claimedWords.forEach(word => {
       hash[word.name] = true
     })
     setCLaimedWordsHash(hash)
-  }, [fetchWordSearched, claimedWords])
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    fetchWordSearched(query)
+  }
+
+  useEffect(() => {
+    if (Object.keys(claimedWords).length > 0) {
+      buildClaimedWordsHash()
+    }
+  }, [claimedWords])
 
   return (
     <div className={classes.search}>
-      <input
-        className={classes.searchInput}
-        type={'text'}
-        name={'wordSearchInput'}
-        placeholder={'Search word'}
-      />
+      <form onSubmit={handleSubmit}>
+        <input
+          className={classes.searchInput}
+          onChange={e => setQuery(e.target.value)}
+          value={query}
+          type={'text'}
+          name={'wordSearchInput'}
+          placeholder={'Type and enter'}
+        />
+      </form>
       <div className={classes.searchResult}>
         {searchedWords.map((word, idx) => (
           <div key={idx} className={classes.result}>

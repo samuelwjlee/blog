@@ -35,6 +35,9 @@ type UserContextVal = {
   unClaimWord: (wordId: number) => void
 }
 
+/**
+ * TODO: Add useReducer to further separate state management concerns
+ */
 export function useUserContextVal(): UserContextVal {
   const [user, setUser] = useState<User>(initUserState)
   const [claimedWords, setClaimedWords] = useState<Word[]>([])

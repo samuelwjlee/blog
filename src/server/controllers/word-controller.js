@@ -21,6 +21,18 @@ exports.getAllWords = (req, res) => {
   })
 }
 
+exports.getQueriedWords = (req, res) => {
+  pool.query(
+    `SELECT * from words WHERE words.name like '%${req.query.query}%'`,
+    (error, results) => {
+      if (error) {
+        throw error
+      }
+      res.status(200).json(results.rows)
+    }
+  )
+}
+
 exports.claimWord = (req, res) => {
   const { userId, wordId } = req.body
 
