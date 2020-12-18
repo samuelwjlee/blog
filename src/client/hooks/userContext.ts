@@ -50,13 +50,27 @@ export function useUserContextVal(): UserContextVal {
     signOutGoogleUser({ user: initUserState, callback: setUser })
   }
 
+  const ensureUserRegistered = useCallback(async () => {
+    const userRes = await fetch(`/users?id=${user.email}`)
+      .then(res => res.json())
+      .catch(console.log)
+
+    if (userRes && userRes.length === 0) {
+      await fetch('/users/new', {
+        method: 'POST',
+        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        body: JSON.stringify({ userId: user.email })
+      }).catch(console.log)
+    }
+  }, [user.email])
+
   const fetchUserClaimedWords = useCallback(async () => {
     const fetchedClaimedWords = await fetch(`/words/user?id=${user.email}`)
       .then(res => res.json())
       .catch(console.log)
 
     setClaimedWords(fetchedClaimedWords)
-  }, [user])
+  }, [user.email])
 
   const claimWord = async (wordId: number) => {
     await fetch('/words/claim', {
@@ -90,9 +104,10 @@ export function useUserContextVal(): UserContextVal {
 
   useEffect(() => {
     if (user.isSignedIn && user.email) {
+      ensureUserRegistered()
       fetchUserClaimedWords()
     }
-  }, [user, fetchUserClaimedWords])
+  }, [user, fetchUserClaimedWords, ensureUserRegistered])
 
   return {
     user,

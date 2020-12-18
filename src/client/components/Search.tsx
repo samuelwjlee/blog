@@ -44,17 +44,6 @@ const Search: React.FC = () => {
     setSearchedWords(fetchedWords)
   }
 
-  const buildClaimedWordsHash = () => {
-    /**
-     * build claimedWordsHash for easier reference
-     */
-    let hash: { [word: string]: boolean } = {}
-    claimedWords.forEach(word => {
-      hash[word.name] = true
-    })
-    setCLaimedWordsHash(hash)
-  }
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     fetchWordSearched(query)
@@ -62,7 +51,14 @@ const Search: React.FC = () => {
 
   useEffect(() => {
     if (Object.keys(claimedWords).length > 0) {
-      buildClaimedWordsHash()
+      /**
+       * build claimedWordsHash for easier reference
+       */
+      let hash: { [word: string]: boolean } = {}
+      claimedWords.forEach(word => {
+        hash[word.name] = true
+      })
+      setCLaimedWordsHash(hash)
     }
   }, [claimedWords])
 
