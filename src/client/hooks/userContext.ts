@@ -7,6 +7,12 @@ import {
   signOutGoogleUser
 } from 'client/utils/auth.utils'
 import { Word } from 'client/types/word.types'
+import { createUser, getUser } from 'client/api/user.api'
+import {
+  createClaimedWord,
+  deleteClaimedWord,
+  getClaimedWords
+} from 'client/api/word.api'
 
 const initUserState = {
   isSignedIn: false,
@@ -20,7 +26,6 @@ const userContextDefaultVal = {
   handleSignIn: () => {},
   handleSignOut: () => {},
   claimedWords: [],
-  fetchUserClaimedWords: () => {},
   claimWord: (wordId: number) => {},
   unClaimWord: (wordId: number) => {}
 }
@@ -30,7 +35,6 @@ type UserContextVal = {
   handleSignIn: (googleUser: GoogleUser) => void
   handleSignOut: () => void
   claimedWords: Word[]
-  fetchUserClaimedWords: () => void
   claimWord: (wordId: number) => void
   unClaimWord: (wordId: number) => void
 }
@@ -51,51 +55,26 @@ export function useUserContextVal(): UserContextVal {
   }
 
   const ensureUserRegistered = useCallback(async () => {
-    const userRes = await fetch(`/users?id=${user.email}`)
-      .then(res => res.json())
-      .catch(console.log)
+    const response = await getUser(user.email)
 
-    if (userRes && userRes.length === 0) {
-      await fetch('/users/new', {
-        method: 'POST',
-        headers: { 'Content-type': 'application/json; charset=UTF-8' },
-        body: JSON.stringify({ userId: user.email })
-      }).catch(console.log)
+    if (Array.isArray(response) && response.length === 0) {
+      createUser(user.email)
     }
   }, [user.email])
 
-  const fetchUserClaimedWords = useCallback(async () => {
-    const fetchedClaimedWords = await fetch(`/words/user?id=${user.email}`)
-      .then(res => res.json())
-      .catch(console.log)
-
-    setClaimedWords(fetchedClaimedWords)
+  const fetchAndSetClaimedWords = useCallback(async () => {
+    const fetchedWords = await getClaimedWords(user.email)
+    setClaimedWords(fetchedWords)
   }, [user.email])
 
   const claimWord = async (wordId: number) => {
-    await fetch('/words/claim', {
-      method: 'POST',
-      headers: { 'Content-type': 'application/json; charset=UTF-8' },
-      body: JSON.stringify({ userId: user.email, wordId })
-    })
-      .then(res => res.json())
-      .catch(console.log)
-
-    // update dom with new words
-    await fetchUserClaimedWords()
+    await createClaimedWord(wordId, user.email)
+    await fetchAndSetClaimedWords()
   }
 
   const unClaimWord = async (wordId: number) => {
-    await fetch('/words/unclaim', {
-      method: 'DELETE',
-      headers: { 'Content-type': 'application/json; charset=UTF-8' },
-      body: JSON.stringify({ userId: user.email, wordId })
-    })
-      .then(res => res.json())
-      .catch(console.log)
-
-    // update dom with new words
-    await fetchUserClaimedWords()
+    await deleteClaimedWord(wordId, user.email)
+    await fetchAndSetClaimedWords()
   }
 
   useEffect(() => {
@@ -105,16 +84,15 @@ export function useUserContextVal(): UserContextVal {
   useEffect(() => {
     if (user.isSignedIn && user.email) {
       ensureUserRegistered()
-      fetchUserClaimedWords()
+      fetchAndSetClaimedWords()
     }
-  }, [user, fetchUserClaimedWords, ensureUserRegistered])
+  }, [user, fetchAndSetClaimedWords, ensureUserRegistered])
 
   return {
     user,
     handleSignIn,
     handleSignOut,
     claimedWords,
-    fetchUserClaimedWords,
     claimWord,
     unClaimWord
   }

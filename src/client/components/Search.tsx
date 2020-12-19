@@ -4,6 +4,7 @@ import { createUseStyles } from 'react-jss'
 import { Word } from 'client/types/word.types'
 import { UserContext } from 'client/hooks/userContext'
 import { BODY_WIDTH_MIN_MAX } from 'client/constants/style.constants'
+import { getSearchResult } from 'client/api/search.api'
 
 const useStyles = createUseStyles({
   result: {
@@ -36,23 +37,16 @@ const Search: React.FC = () => {
   const [query, setQuery] = useState<string>('')
   const { claimWord, claimedWords } = useContext(UserContext)
 
-  const fetchWordSearched = async (query: string) => {
-    const fetchedWords = await fetch(`/words?query=${query}`)
-      .then(res => res.json())
-      .catch(console.log)
-
-    setSearchedWords(fetchedWords)
-  }
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    fetchWordSearched(query)
+    const fetchedWords = await getSearchResult(query)
+    setSearchedWords(fetchedWords)
   }
 
   useEffect(() => {
     if (Object.keys(claimedWords).length > 0) {
       /**
-       * build claimedWordsHash for easier reference
+       * build claimedWordsHash for O(1) read
        */
       let hash: { [word: string]: boolean } = {}
       claimedWords.forEach(word => {
