@@ -21,7 +21,7 @@ const initUserState = {
   profileImageUrl: null
 }
 
-const userContextDefaultVal = {
+const appContextDefaultVal = {
   user: initUserState,
   handleSignIn: () => {},
   handleSignOut: () => {},
@@ -30,7 +30,7 @@ const userContextDefaultVal = {
   unClaimWord: (wordId: number) => {}
 }
 
-type UserContextVal = {
+export type AppContextVal = {
   user: User
   handleSignIn: (googleUser: GoogleUser) => void
   handleSignOut: () => void
@@ -42,7 +42,7 @@ type UserContextVal = {
 /**
  * TODO: Add useReducer to further separate state management concerns
  */
-export function useUserContextVal(): UserContextVal {
+export function useAppContextVal(): AppContextVal {
   const [user, setUser] = useState<User>(initUserState)
   const [claimedWords, setClaimedWords] = useState<Word[]>([])
 
@@ -98,6 +98,6 @@ export function useUserContextVal(): UserContextVal {
   }
 }
 
-export const UserContext = React.createContext<UserContextVal>(
-  userContextDefaultVal
+export const AppContext = React.createContext<AppContextVal>(
+  appContextDefaultVal
 )

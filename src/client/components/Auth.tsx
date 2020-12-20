@@ -11,7 +11,7 @@ import {
 } from 'client/constants/style.constants'
 import { GOOGLE_OAUTH_BUTTON_ID } from 'client/constants/auth.constants'
 import Avatar from 'client/assets/avatar-icon.png'
-import { UserContext } from 'client/hooks/userContext'
+import { AppContext } from 'client/hooks/appContext'
 
 const useStyles = createUseStyles({
   authIconButton: {
@@ -60,7 +60,7 @@ const useStyles = createUseStyles({
 })
 
 const Auth: React.FC = () => {
-  const { user, handleSignIn, handleSignOut } = useContext(UserContext)
+  const { user, handleSignIn, handleSignOut } = useContext(AppContext)
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false)
   const classes = useStyles(user.profileImageUrl)
 

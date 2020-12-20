@@ -5,7 +5,7 @@ import Header from 'client/components/Header'
 // import Dashboard from 'client/components/Dashboard'
 import WordList from 'client/components/WordList'
 import { BODY_WIDTH_MIN_MAX } from 'client/constants/style.constants'
-import { UserContext, useUserContextVal } from 'client/hooks/userContext'
+import { AppContext, useAppContextVal } from 'client/hooks/appContext'
 import WelcomePage from 'client/components/WelcomePage'
 import Search from 'client/components/Search'
 
@@ -34,22 +34,22 @@ const useStyles = createUseStyles({
 })
 
 const App: React.FC = () => {
-  const userContextVal = useUserContextVal()
+  const appContextVal = useAppContextVal()
   const classes = useStyles()
 
   return (
-    <UserContext.Provider value={userContextVal}>
+    <AppContext.Provider value={appContextVal}>
       <Header />
-      {userContextVal.user.isSignedIn ? (
+      {appContextVal.user.isSignedIn ? (
         <div className={classes.signedInContent}>
           {/* <Dashboard /> */}
           <Search />
-          <WordList words={userContextVal.claimedWords} />
+          <WordList words={appContextVal.claimedWords} />
         </div>
       ) : (
         <WelcomePage />
       )}
-    </UserContext.Provider>
+    </AppContext.Provider>
   )
 }
 

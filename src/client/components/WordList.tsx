@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { createUseStyles } from 'react-jss'
 
 import { Word } from 'client/types/word.types'
-import { UserContext } from 'client/hooks/userContext'
+import { AppContext } from 'client/hooks/appContext'
 import { BODY_WIDTH_MIN_MAX } from 'client/constants/style.constants'
 
 const COMMON_WORD_DEF_STYLE = {
@@ -56,7 +56,7 @@ type WordProps = {
 }
 const WordCard: React.FC<WordProps> = ({ word, def, func, id }) => {
   const classes = useStyles()
-  const { unClaimWord } = useContext(UserContext)
+  const { unClaimWord } = useContext(AppContext)
 
   return (
     <div className={classes.wordContainer}>

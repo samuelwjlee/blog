@@ -36,3 +36,5 @@ INSERT INTO user_words (user_id, words_id)
 VALUES  ('samuelwjlee@gmail.com', 1);
 INSERT INTO user_words (user_id, words_id)
 VALUES  ('samuelwjlee@gmail.com', 2);
+
+/* TODO: on app load, init db with this seed commands */

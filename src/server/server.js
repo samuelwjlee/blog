@@ -20,6 +20,9 @@ app.use(bodyParser.json())
 app.use('/words', wordRouter)
 app.use('/users', userRouter)
 
+/**
+ * TODO: split client and server code
+ */
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`)
 })

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { createUseStyles } from 'react-jss'
 
 import { Word } from 'client/types/word.types'
-import { UserContext } from 'client/hooks/userContext'
+import { AppContext } from 'client/hooks/appContext'
 import { BODY_WIDTH_MIN_MAX } from 'client/constants/style.constants'
 import { getSearchResult } from 'client/api/search.api'
 
@@ -35,7 +35,7 @@ const Search: React.FC = () => {
     [word: string]: boolean
   }>({})
   const [query, setQuery] = useState<string>('')
-  const { claimWord, claimedWords } = useContext(UserContext)
+  const { claimWord, claimedWords } = useContext(AppContext)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
