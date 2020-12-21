@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useReducer } from 'react'
 
 import { GoogleUser, User } from 'client/types/auth.types'
 import {
@@ -13,6 +13,8 @@ import {
   deleteClaimedWord,
   getClaimedWords
 } from 'client/api/word.api'
+import { reducer } from 'client/hooks/reducer'
+import { store } from 'client/hooks/store'
 
 const initUserState = {
   isSignedIn: false,
@@ -23,18 +25,18 @@ const initUserState = {
 
 const appContextDefaultVal = {
   user: initUserState,
+  claimedWords: [],
   handleSignIn: () => {},
   handleSignOut: () => {},
-  claimedWords: [],
   claimWord: (wordId: number) => {},
   unClaimWord: (wordId: number) => {}
 }
 
 export type AppContextVal = {
   user: User
+  claimedWords: Word[]
   handleSignIn: (googleUser: GoogleUser) => void
   handleSignOut: () => void
-  claimedWords: Word[]
   claimWord: (wordId: number) => void
   unClaimWord: (wordId: number) => void
 }
@@ -43,15 +45,19 @@ export type AppContextVal = {
  * TODO: Add useReducer to further separate state management concerns
  */
 export function useAppContextVal(): AppContextVal {
-  const [user, setUser] = useState<User>(initUserState)
-  const [claimedWords, setClaimedWords] = useState<Word[]>([])
+  const [state, dispatch] = useReducer(reducer, store)
+  const { user, claimedWords } = state
 
   const handleSignIn = (googleUser: GoogleUser): void => {
-    signInGoogleUser({ user: googleUser, callback: setUser })
+    const callback = (user: User) =>
+      dispatch({ type: 'SET_USER', payload: user })
+    signInGoogleUser({ user: googleUser, callback })
   }
 
   const handleSignOut = (): void => {
-    signOutGoogleUser({ user: initUserState, callback: setUser })
+    const callback = (user: User) =>
+      dispatch({ type: 'SET_USER', payload: user })
+    signOutGoogleUser({ user: initUserState, callback })
   }
 
   const ensureUserRegistered = useCallback(async () => {
@@ -64,7 +70,7 @@ export function useAppContextVal(): AppContextVal {
 
   const fetchAndSetClaimedWords = useCallback(async () => {
     const fetchedWords = await getClaimedWords(user.email)
-    setClaimedWords(fetchedWords)
+    dispatch({ type: 'SET_CLAIMED_WORDS', payload: fetchedWords })
   }, [user.email])
 
   const claimWord = async (wordId: number) => {
@@ -90,9 +96,9 @@ export function useAppContextVal(): AppContextVal {
 
   return {
     user,
+    claimedWords,
     handleSignIn,
     handleSignOut,
-    claimedWords,
     claimWord,
     unClaimWord
   }

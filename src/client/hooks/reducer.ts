@@ -1,11 +1,27 @@
-import { AppContextVal } from 'client/hooks/appContext'
+import { User } from 'client/types/auth.types'
+import { Word } from 'client/types/word.types'
 
-export const reducer = (state: AppContextVal, action: any) => {
+type State = {
+  user: User
+  claimedWords: Word[]
+}
+
+type Action = {
+  type: string
+  payload: any
+}
+
+export const reducer = (state: any, action: Action) => {
   switch (action.type) {
-    case 'UPDATE_USER':
+    case 'SET_USER':
       return {
         ...state,
-        user: action.user
+        user: action.payload
+      }
+    case 'SET_CLAIMED_WORDS':
+      return {
+        ...state,
+        claimedWords: action.payload
       }
     default:
       return {}
