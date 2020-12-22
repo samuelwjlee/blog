@@ -60,7 +60,7 @@ const useStyles = createUseStyles({
 })
 
 const Auth: React.FC = () => {
-  const { state, handleSignIn, handleSignOut } = useContext(AppContext)
+  const { state, handleAuth } = useContext(AppContext)
   const { user } = state
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false)
   const classes = useStyles(user.profileImageUrl)
@@ -70,9 +70,9 @@ const Auth: React.FC = () => {
    */
   useEffect(() => {
     if (isAuthOpen && !user.isSignedIn) {
-      renderGoogleOAuthButton(handleSignIn)
+      renderGoogleOAuthButton(handleAuth)
     }
-  }, [isAuthOpen, user.isSignedIn, handleSignIn])
+  }, [isAuthOpen, user.isSignedIn, handleAuth])
 
   /**
    * close authDropdown when change in isSignedIn
@@ -100,7 +100,7 @@ const Auth: React.FC = () => {
                 <div className={classes.authAction}>
                   <button
                     className={classes.signOutButton}
-                    onClick={handleSignOut}
+                    onClick={() => handleAuth()}
                   >
                     Sign out
                   </button>

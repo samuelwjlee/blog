@@ -28,8 +28,7 @@ const appContextDefaultVal = {
     user: initUserState,
     claimedWords: []
   },
-  handleSignIn: () => {},
-  handleSignOut: () => {},
+  handleAuth: (user?: GoogleUser) => {},
   claimWord: (wordId: number) => {},
   unClaimWord: (wordId: number) => {}
 }
@@ -39,8 +38,7 @@ export type AppContextVal = {
     user: User
     claimedWords: Word[]
   }
-  handleSignIn: (googleUser: GoogleUser) => void
-  handleSignOut: () => void
+  handleAuth: (user?: GoogleUser) => void
   claimWord: (wordId: number) => void
   unClaimWord: (wordId: number) => void
 }
@@ -49,18 +47,10 @@ export function useAppContextVal(): AppContextVal {
   const [state, dispatch] = useReducer(reducer, store)
   const { user } = state
 
-  const handleSignIn = (googleUser: GoogleUser): void => {
-    signInGoogleUser({
-      user: googleUser,
-      callback: (user: User) => {
-        dispatch({ type: 'SET_USER', payload: user })
-      }
-    })
-  }
-
-  const handleSignOut = (): void => {
-    signOutGoogleUser({
-      user: initUserState,
+  const handleAuth = (user?: GoogleUser): void => {
+    const authAction = user ? signInGoogleUser : signOutGoogleUser
+    authAction({
+      user: user ?? initUserState,
       callback: (user: User) => {
         dispatch({ type: 'SET_USER', payload: user })
       }
@@ -93,7 +83,7 @@ export function useAppContextVal(): AppContextVal {
   }
 
   useEffect(() => {
-    loadGoogleOAuthScript(handleSignIn)
+    loadGoogleOAuthScript(handleAuth)
   }, [])
 
   useEffect(() => {
@@ -105,8 +95,7 @@ export function useAppContextVal(): AppContextVal {
 
   return {
     state,
-    handleSignIn,
-    handleSignOut,
+    handleAuth,
     claimWord,
     unClaimWord
   }
