@@ -35,16 +35,17 @@ const useStyles = createUseStyles({
 
 const App: React.FC = () => {
   const appContextVal = useAppContextVal()
+  const { user, claimedWords } = appContextVal.state
   const classes = useStyles()
 
   return (
     <AppContext.Provider value={appContextVal}>
       <Header />
-      {appContextVal.user.isSignedIn ? (
+      {user.isSignedIn ? (
         <div className={classes.signedInContent}>
           {/* <Dashboard /> */}
           <Search />
-          <WordList words={appContextVal.claimedWords} />
+          <WordList words={claimedWords} />
         </div>
       ) : (
         <WelcomePage />

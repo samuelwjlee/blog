@@ -60,7 +60,8 @@ const useStyles = createUseStyles({
 })
 
 const Auth: React.FC = () => {
-  const { user, handleSignIn, handleSignOut } = useContext(AppContext)
+  const { state, handleSignIn, handleSignOut } = useContext(AppContext)
+  const { user } = state
   const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false)
   const classes = useStyles(user.profileImageUrl)
 

@@ -35,7 +35,8 @@ const Search: React.FC = () => {
     [word: string]: boolean
   }>({})
   const [query, setQuery] = useState<string>('')
-  const { claimWord, claimedWords } = useContext(AppContext)
+  const { claimWord, state } = useContext(AppContext)
+  const { claimedWords } = state
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
