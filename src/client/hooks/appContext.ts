@@ -95,6 +95,9 @@ export function useAppContextVal(): AppContextVal {
 
   return {
     state,
+    /**
+     * TODO: separate out helper funcs and pass in dispatch instead
+     */
     handleAuth,
     claimWord,
     unClaimWord
