@@ -40,7 +40,7 @@ const Search: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const fetchedWords = await getSearchResult(query)
+    const fetchedWords = (await getSearchResult(query)) ?? []
     setSearchedWords(fetchedWords)
   }
 

@@ -68,7 +68,7 @@ export function useAppContextVal(): AppContextVal {
   const fetchAndSetClaimedWords = useCallback(async () => {
     dispatch({
       type: 'SET_CLAIMED_WORDS',
-      payload: await getClaimedWords(user.email)
+      payload: (await getClaimedWords(user.email)) ?? []
     })
   }, [user.email])
 

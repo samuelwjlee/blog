@@ -1,16 +1,13 @@
 const { Pool } = require('pg')
 
-/**
- * TODO: move these vars to .env
- */
+require('dotenv').config()
+
 const pool = new Pool({
-  user: 'api_user',
-  host: 'localhost',
-  database: 'words_api',
-  password: 'password',
-  port: 5432
+  user: process.env.DB_USERNAME,
+  host: process.env.HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT
 })
 
 module.exports = { pool }
-
-// https://www.taniarascia.com/node-express-postgresql-heroku/
