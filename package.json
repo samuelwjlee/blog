@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@types/express": "^4.17.9",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
@@ -27,7 +28,7 @@
   "scripts": {
     "start": "concurrently \"yarn start-server\" \"yarn start-client\" --kill-others",
     "start-client": "react-scripts start",
-    "start-server": "cross-env NODE_ENV=development nodemon src/server/server.js --watch server/*",
+    "start-server": "cross-env NODE_ENV=development nodemon src/server/server.* --watch server/*.{ts,js}",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -51,7 +52,6 @@
     ]
   },
   "devDependencies": {
-    "@types/express": "^4.17.9",
     "concurrently": "^5.3.0",
     "cross-env": "^7.0.3",
     "dot-env": "^0.0.1",
