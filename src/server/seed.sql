@@ -1,8 +1,11 @@
-CREATE DATABASE wordful;
+-- start fresh before seeding
+DROP TABLE words;
+DROP TABLE users;
+DROP TABLE user_words;
 
-CREATE TABLE words (
-  ID SERIAL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
+CREATE TABLE IF NOT EXISTS words (
+  ID SERIAL PRIMARY KEY NOT NULL,
+  name VARCHAR(255) NOT NULL UNIQUE,
   definition VARCHAR(255) NOT NULL,
   function VARCHAR(255) NOT NULL
 );
@@ -18,16 +21,16 @@ VALUES  ('balk', 'refuse to proceed or to do something', 'verb');
 INSERT INTO words (name, definition, function)
 VALUES  ('vacilitate', 'fluctuating, wavering', 'intransitive verb');
 
-CREATE TABLE users (
-  ID SERIAL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS users (
+  ID UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   email VARCHAR(255) NOT NULL
 );
 
 INSERT INTO users (email)
 VALUES  ('samuelwjlee@gmail.com');
 
-CREATE TABLE user_words (
-  ID SERIAL PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS  user_words (
+  ID UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id VARCHAR(255) NOT NULL,
   words_id INT NOT NULL
 );

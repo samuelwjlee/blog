@@ -1,13 +1,12 @@
 const express = require('express')
-const wordRouter = require('./routes/word-route')
-const userRouter = require('./routes/user-route')
-
 const bodyParser = require('body-parser')
 const compression = require('compression')
 const helmet = require('helmet')
 const cors = require('cors')
 
-const PORT = 8080
+const wordRouter = require('./routes/word-route')
+const userRouter = require('./routes/user-route')
+
 const app = express()
 
 app.use(cors())
@@ -23,6 +22,6 @@ app.use('/users', userRouter)
 /**
  * TODO: split client and server code
  */
-app.listen(PORT, () => {
-  console.log(`Server listening on port: ${PORT}`)
+app.listen(process.env.EXPRESS_SERVER_PORT, () => {
+  console.log(`Server listening on port: ${process.env.EXPRESS_SERVER_PORT}`)
 })
