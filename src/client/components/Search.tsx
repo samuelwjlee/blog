@@ -30,6 +30,9 @@ const useStyles = createUseStyles({
 
 const Search: React.FC = () => {
   const classes = useStyles()
+  /**
+   * TODO: use https://www.wordsapi.com/ instead of internal mock word db
+   */
   const [searchedWords, setSearchedWords] = useState<Word[]>([])
   const [claimedWordsHash, setClaimedWordsHash] = useState<{
     [word: string]: boolean
@@ -60,7 +63,10 @@ const Search: React.FC = () => {
     ) {
       setClaimedWordsHash({})
     }
-  }, [claimedWords, claimedWordsHash])
+    /**
+     * TODO: Fix infinite loop when adding claimedWordsHash as dependency
+     */
+  }, [claimedWords])
 
   return (
     <div className={classes.search}>
