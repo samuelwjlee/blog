@@ -31,7 +31,7 @@ const useStyles = createUseStyles({
 const Search: React.FC = () => {
   const classes = useStyles()
   const [searchedWords, setSearchedWords] = useState<Word[]>([])
-  const [claimedWordsHash, setCLaimedWordsHash] = useState<{
+  const [claimedWordsHash, setClaimedWordsHash] = useState<{
     [word: string]: boolean
   }>({})
   const [query, setQuery] = useState<string>('')
@@ -53,9 +53,14 @@ const Search: React.FC = () => {
       claimedWords.forEach(word => {
         hash[word.name] = true
       })
-      setCLaimedWordsHash(hash)
+      setClaimedWordsHash(hash)
+    } else if (
+      Object.keys(claimedWords).length === 0 &&
+      Object.values(claimedWordsHash).filter(val => val).length > 0
+    ) {
+      setClaimedWordsHash({})
     }
-  }, [claimedWords])
+  }, [claimedWords, claimedWordsHash])
 
   return (
     <div className={classes.search}>
