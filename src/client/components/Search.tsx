@@ -48,7 +48,10 @@ const Search: React.FC = () => {
   }
 
   useEffect(() => {
-    if (Object.keys(claimedWords).length > 0) {
+    if (
+      Object.keys(claimedWords).length !==
+      Object.values(claimedWordsHash).filter(val => val).length
+    ) {
       /**
        * build claimedWordsHash for O(1) read
        */
@@ -58,15 +61,15 @@ const Search: React.FC = () => {
       })
       setClaimedWordsHash(hash)
     } else if (
+      /**
+       * On deleting the last claimed word
+       */
       Object.keys(claimedWords).length === 0 &&
       Object.values(claimedWordsHash).filter(val => val).length > 0
     ) {
       setClaimedWordsHash({})
     }
-    /**
-     * TODO: Fix infinite loop when adding claimedWordsHash as dependency
-     */
-  }, [claimedWords])
+  }, [claimedWords, claimedWordsHash])
 
   return (
     <div className={classes.search}>
