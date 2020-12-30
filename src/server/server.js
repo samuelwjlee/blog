@@ -20,7 +20,9 @@ app.use('/words', wordRouter)
 app.use('/users', userRouter)
 
 /**
- * TODO: split client and server code
+ * TODO:
+ * 1. split client and server code
+ * 2. host server and db
  */
 app.listen(process.env.EXPRESS_SERVER_PORT, () => {
   console.log(`Server listening on port: ${process.env.EXPRESS_SERVER_PORT}`)
