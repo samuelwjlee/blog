@@ -9,7 +9,12 @@ const userRouter = require('./routes/user-route')
 
 const app = express()
 
-app.use(cors())
+const isProduction = process.env.NODE_ENV === 'production'
+const origin = {
+  origin: isProduction ? 'https://wordful.herokuapp.com/' : '*'
+}
+app.use(cors(origin))
+
 app.use(helmet())
 app.use(compression())
 app.use(express.json())
@@ -22,7 +27,8 @@ app.use('/users', userRouter)
 /**
  * TODO:
  * 1. split client and server code
- * 2. host server and db
+ * 2. deploy to heroku
+ * https://www.taniarascia.com/node-express-postgresql-heroku/#deploy-app-to-heroku
  */
 app.listen(process.env.EXPRESS_SERVER_PORT, () => {
   console.log(`Server listening on port: ${process.env.EXPRESS_SERVER_PORT}`)
