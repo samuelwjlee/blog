@@ -29,6 +29,7 @@ app.use('/users', userRouter)
  * 1. split client and server code
  * 2. deploy to heroku
  * https://www.taniarascia.com/node-express-postgresql-heroku/#deploy-app-to-heroku
+ * 3. create procfile
  */
 app.listen(process.env.EXPRESS_SERVER_PORT, () => {
   console.log(`Server listening on port: ${process.env.EXPRESS_SERVER_PORT}`)
