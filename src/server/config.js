@@ -2,6 +2,9 @@ const { Pool } = require('pg')
 
 require('dotenv').config()
 
+/**
+ * TODO: switch to Knex for easier prod deployment
+ */
 const pool = new Pool({
   user: process.env.DB_USERNAME,
   host: process.env.HOST,

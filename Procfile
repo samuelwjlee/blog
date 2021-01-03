@@ -1,2 +1,3 @@
-web:yarn start
-web:node ./src/server/server.js
+web:serve -s build
+heroku pg:reset --app wordful
+web:yarn start-server
