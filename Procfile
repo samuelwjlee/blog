@@ -1,3 +1,3 @@
 web:serve -s build
-heroku pg:reset --app wordful
-web:yarn start-server
+web:node ./src/server/server.js
+heroku pg:postgresql-solid-03593 --app wordful
