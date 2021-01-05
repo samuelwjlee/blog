@@ -1,4 +1,6 @@
 const express = require('express')
+const path = require('path')
+
 const bodyParser = require('body-parser')
 const compression = require('compression')
 const helmet = require('helmet')
@@ -8,6 +10,9 @@ const wordRouter = require('./routes/word-route')
 const userRouter = require('./routes/user-route')
 
 const app = express()
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'build')))
 
 const isProduction = process.env.NODE_ENV === 'production'
 const origin = {
@@ -23,6 +28,10 @@ app.use(bodyParser.json())
 
 app.use('/words', wordRouter)
 app.use('/users', userRouter)
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/build/index.html'))
+})
 
 /**
  * TODO:
