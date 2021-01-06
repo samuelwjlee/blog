@@ -11,14 +11,16 @@ const userRouter = require('./routes/user-route')
 
 const app = express()
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'build')))
-
 const isProduction = process.env.NODE_ENV === 'production'
 const origin = {
   origin: isProduction ? 'https://wordful.herokuapp.com/' : '*'
 }
 app.use(cors(origin))
+
+// Serve static files from the React app
+if (isProduction) {
+  app.use(express.static(path.join(__dirname, 'client/build')))
+}
 
 app.use(helmet())
 app.use(compression())
@@ -30,7 +32,7 @@ app.use('/words', wordRouter)
 app.use('/users', userRouter)
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/build/index.html'))
+  res.sendFile(path.join(__dirname + '/client/public/index.html'))
 })
 
 /**

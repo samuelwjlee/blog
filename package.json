@@ -70,5 +70,6 @@
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,css,md}": "prettier --write"
-  }
+  },
+  "heroku-postbuild": "yarn --prefix client && yarn build --prefix client"
 }
