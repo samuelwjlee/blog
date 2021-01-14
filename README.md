@@ -1,15 +1,15 @@
 # Wordful
 
-Learn new words while having lots of fun!
+Easily add new words to learn!
 
 ## User Experience
 
-Currently, word learning apps require users to create virtual cards that contain word and its definition. With Wordful, users will be able to just `cmd + v` the word in the clipboard.
+Users are be able to `cmd + v` to add new words in the clipboard
 
 ## Minimal Viable Product
 
 - Users can login/signup using OAuth
-- Users can save words in clipboard
+- Users can add words in clipboard
 - Users can view saved words
 - Users can delete saved words
 
@@ -17,5 +17,5 @@ Currently, word learning apps require users to create virtual cards that contain
 
 - React with TypeScript
 - Node.js
-- NoSQL database (TBD)
+- Postgres
 - Docker
