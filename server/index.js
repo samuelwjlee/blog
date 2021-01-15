@@ -6,8 +6,8 @@ const compression = require('compression')
 const helmet = require('helmet')
 const cors = require('cors')
 
-const wordRouter = require('./routes/word-route')
-const userRouter = require('./routes/user-route')
+const wordRouter = require('controllers/routes/word-route')
+const userRouter = require('controllers/routes/user-route')
 
 const app = express()
 
@@ -17,7 +17,7 @@ const origin = {
 }
 app.use(cors(origin))
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'build')))
+app.use(express.static(path.join(__dirname, 'client/build')))
 
 app.use(helmet())
 app.use(compression())
@@ -29,7 +29,7 @@ app.use('/words', wordRouter)
 app.use('/users', userRouter)
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build/index.html'))
+  res.sendFile(path.join(__dirname, 'client/build/index.html'))
 })
 
 /**

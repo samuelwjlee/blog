@@ -10,7 +10,7 @@ import {
   HEADER_HEIGHT
 } from 'constants/style.constants'
 import { GOOGLE_OAUTH_BUTTON_ID } from 'constants/auth.constants'
-import Avatar from 'client/assets/avatar-icon.png'
+import Avatar from 'assets/avatar-icon.png'
 import { AppContext } from 'hooks/appContext'
 
 const useStyles = createUseStyles({
