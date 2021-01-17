@@ -23,14 +23,12 @@
     "prettier": "^2.2.1"
   },
   "scripts": {
-    "start": "concurrently \"yarn start-server\" \"yarn start-client\" --kill-others",
+    "start": "node server/index.js",
+    "start-dev": "concurrently \"yarn start-server\" \"yarn start-client\" --kill-others",
     "start-client": "cd client && yarn start",
     "start-server": "psql -d wordful -U api_user -f server/init.sql && cross-env NODE_ENV=development nodemon server/index.* --watch server/index/*.{ts,js}",
-    "start-prod-build": "NODE_ENV=production yarn build && serve -s build",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "heroku-postbuild": "cd client && yarn && yarn run build"
+    "start-prod-build": "NODE_ENV=production && cd client && yarn build && serve -s build",
+    "heroku-postbuild": "cd client && yarn && yarn build"
   },
   "husky": {
     "hooks": {
