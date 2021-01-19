@@ -18,7 +18,7 @@ const origin = {
 }
 app.use(cors(origin))
 // Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')))
+// app.use(express.static(path.join(__dirname, 'client/build')))
 
 app.use(helmet())
 app.use(compression())
@@ -29,8 +29,8 @@ app.use(bodyParser.json())
 app.use('/words', wordRouter)
 app.use('/users', userRouter)
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build/index.html'))
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
 })
 
 app.listen(process.env.EXPRESS_SERVER_PORT, () => {
