@@ -30,7 +30,7 @@ app.use('/words', wordRouter)
 app.use('/users', userRouter)
 
 app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, '/client/build/index.html'))
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
 })
 
 app.listen(process.env.EXPRESS_SERVER_PORT, () => {

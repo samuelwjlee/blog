@@ -1,2 +1,1 @@
-web: cd client && yarn start
-node: cd && yarn start
+web: yarn start-server && yarn start-client
