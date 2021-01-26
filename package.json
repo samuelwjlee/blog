@@ -29,7 +29,8 @@
     "start-dev": "concurrently \"yarn start-server\" \"yarn start-client\" --kill-others",
     "start-client": "cd client && yarn start",
     "start-server": "psql -d wordful -U api_user -f server/init.sql && cross-env NODE_ENV=development nodemon server/index.* --watch server/index/*.{ts,js}",
-    "start-prod-build": "NODE_ENV=production && cd client && yarn build && serve -s build"
+    "start-prod-build": "NODE_ENV=production && cd client && yarn build && serve -s build",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn --prefix client && yarn build --prefix client"
   },
   "husky": {
     "hooks": {
