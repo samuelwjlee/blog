@@ -19,10 +19,8 @@ const origin = {
 app.use(cors(origin))
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')))
-//production mode
+
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build')))
-  //
   app.get('*', (req, res) => {
     res.sendfile(path.join(__dirname, 'client/build/index.html'))
   })
