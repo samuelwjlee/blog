@@ -35,6 +35,6 @@ app.use(bodyParser.json())
 app.use('/words', wordRouter)
 app.use('/users', userRouter)
 
-app.listen(process.env.EXPRESS_SERVER_PORT, () => {
-  console.log(`Server listening on port: ${process.env.EXPRESS_SERVER_PORT}`)
+app.listen(process.env.PORT || 8080, () => {
+  console.log(`Server listening on port: ${process.env.PORT}`)
 })
