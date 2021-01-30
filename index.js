@@ -6,8 +6,8 @@ const compression = require('compression')
 const helmet = require('helmet')
 const cors = require('cors')
 
-const wordRouter = require('./routes/word-route')
-const userRouter = require('./routes/user-route')
+const wordRouter = require('./server/routes/word-route')
+const userRouter = require('./server/routes/user-route')
 
 require('dotenv').config()
 const app = express()
