@@ -17,12 +17,11 @@ const origin = {
   origin: isProduction ? 'https://wordful.herokuapp.com/' : '*'
 }
 app.use(cors(origin))
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')))
 
-if (process.env.NODE_ENV === 'production') {
+if (isProduction) {
+  app.use(express.static('client/build'))
   app.get('*', (req, res) => {
-    res.sendfile(path.join(__dirname, 'client/build/index.html'))
+    res.sendfile(path.resolve(__dirname, 'client/build/index.html'))
   })
 }
 
@@ -35,6 +34,8 @@ app.use(bodyParser.json())
 app.use('/words', wordRouter)
 app.use('/users', userRouter)
 
-app.listen(process.env.PORT || 8080, () => {
+const PORT = process.env.PORT || 8080
+
+app.listen(PORT, () => {
   console.log(`Server listening on port: ${process.env.PORT}`)
 })
