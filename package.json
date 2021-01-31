@@ -24,7 +24,7 @@
     "prettier": "^2.2.1"
   },
   "scripts": {
-    "start": "node server/index.js",
+    "start": "node ./index.js",
     "start-dev": "concurrently \"yarn start-server\" \"yarn start-client\" --kill-others",
     "start-client": "cd client && yarn start",
     "start-server": "psql -d wordful -U api_user -f server/init.sql && cross-env NODE_ENV=development nodemon index.* --watch index/*.{ts,js}",
