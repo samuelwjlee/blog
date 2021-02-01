@@ -17,14 +17,6 @@ const origin = {
   origin: isProduction ? 'https://wordful.herokuapp.com/' : '*'
 }
 app.use(cors(origin))
-
-if (isProduction) {
-  app.use(express.static('client/build'))
-  app.get('*', (req, res) => {
-    res.sendfile(path.resolve(__dirname, 'client/build/index.html'))
-  })
-}
-
 app.use(helmet())
 app.use(compression())
 app.use(express.json())
@@ -33,6 +25,13 @@ app.use(bodyParser.json())
 
 app.use('/words', wordRouter)
 app.use('/users', userRouter)
+
+if (isProduction) {
+  app.use(express.static('client/build'))
+  app.get('*', (req, res) => {
+    res.sendfile(path.resolve(__dirname, 'client/build/index.html'))
+  })
+}
 
 const PORT = process.env.PORT || 8080
 

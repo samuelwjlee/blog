@@ -22,7 +22,7 @@
   },
   "include": [
     "server/**/*"
-  ],
+, "index.js"  ],
   "exclude": [
     "node_modules"
   ]
