@@ -29,7 +29,7 @@
     "start-client": "cd client && yarn start",
     "start-server": "psql -d wordful -U api_user -f server/init.sql && cross-env NODE_ENV=development nodemon index.* --watch index/*.{ts,js}",
     "start-prod-build": "NODE_ENV=production && cd client && yarn build && serve -s build",
-    "heroku-postbuild": "psql -d wordful -U api_user -f ./server/init.sql && cd client && yarn && yarn build"
+    "heroku-postbuild": "cd client && yarn && yarn build"
   },
   "husky": {
     "hooks": {
