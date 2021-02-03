@@ -23,16 +23,15 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.use(express.static('client/build'))
-
-app.use('/words', wordRouter)
-app.use('/users', userRouter)
-
 if (isProduction) {
+  app.use(express.static('client/build'))
   app.get('*', (req, res) => {
     res.sendfile(path.resolve(__dirname, 'client/build/index.html'))
   })
 }
+
+app.use('/words', wordRouter)
+app.use('/users', userRouter)
 
 const PORT = process.env.PORT || 8080
 
