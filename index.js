@@ -17,11 +17,9 @@ const origin = {
   origin: isProduction ? 'https://wordful.herokuapp.com/' : '*'
 }
 app.use(cors(origin))
-app.use(helmet())
-app.use(compression())
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+
+app.use('/words', wordRouter)
+app.use('/users', userRouter)
 
 if (isProduction) {
   app.use(express.static('client/build'))
@@ -30,11 +28,16 @@ if (isProduction) {
   })
 }
 
-app.use('/words', wordRouter)
-app.use('/users', userRouter)
+app.use(helmet())
+app.use(compression())
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 
 const PORT = process.env.PORT || 8080
 
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${process.env.PORT}`)
 })
+
+//https://github.com/aautio/react-express-postgres-heroku/blob/master/server/server.js
