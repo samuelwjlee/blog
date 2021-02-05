@@ -1,6 +1,6 @@
 const express = require('express')
 const path = require('path')
-
+const postgrator = require('postgrator')
 const bodyParser = require('body-parser')
 const compression = require('compression')
 const helmet = require('helmet')
@@ -12,6 +12,7 @@ const userRouter = require('./server/routes/user-route')
 require('dotenv').config()
 const app = express()
 
+const PORT = process.env.PORT || 8080
 const isProduction = process.env.NODE_ENV === 'production'
 const origin = {
   origin: isProduction ? 'https://wordful.herokuapp.com/' : '*'
@@ -34,10 +35,26 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-const PORT = process.env.PORT || 8080
+/*
+ * Migrate database before listening for requests
+ */
+postgrator.setConfig({
+  migrationDirectory: './server/migrations',
+  driver: 'pg',
+  username: process.env.DB_USERNAME,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT
+})
+postgrator.migrate('max', (err, migrations) => {
+  if (err) {
+    console.error('Database migration failed!')
+    console.error(err)
+    process.exit(1)
+  }
+})
 
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${process.env.PORT}`)
 })
-
-//https://github.com/aautio/react-express-postgres-heroku/blob/master/server/server.js

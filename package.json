@@ -13,7 +13,8 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^4.3.1",
-    "pg": "^8.5.1"
+    "pg": "^8.5.1",
+    "postgrator": "^4.1.1"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
@@ -27,7 +28,7 @@
     "start": "node ./index.js",
     "start-dev": "concurrently \"yarn start-server\" \"yarn start-client\" --kill-others",
     "start-client": "cd client && yarn start",
-    "start-server": "psql -d wordful -U api_user -f server/init.sql && cross-env NODE_ENV=development nodemon index.* --watch index/*.{ts,js}",
+    "start-server": "psql -d wordful -U api_user -f server/migrations/init.sql && cross-env NODE_ENV=development nodemon index.* --watch index/*.{ts,js}",
     "start-prod-build": "NODE_ENV=production && cd client && yarn build && serve -s build",
     "heroku-postbuild": "cd client && yarn && yarn build"
   },
