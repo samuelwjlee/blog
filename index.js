@@ -6,11 +6,11 @@ const compression = require('compression')
 const helmet = require('helmet')
 const cors = require('cors')
 
-require('dotenv').config()
-
-const app = express()
 const wordRouter = require('./server/routes/word-route')
 const userRouter = require('./server/routes/user-route')
+
+require('dotenv').config()
+const app = express()
 
 const isProduction = process.env.NODE_ENV === 'production'
 const origin = {
@@ -57,7 +57,6 @@ postgrator.migrate('max', (err, migrations) => {
 
   postgrator.endConnection(() => {
     console.log('Database migrated successfully.')
-
     /*
      * Database has been migrated, all is good to go!
      */
