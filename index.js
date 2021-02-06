@@ -6,13 +6,12 @@ const compression = require('compression')
 const helmet = require('helmet')
 const cors = require('cors')
 
+require('dotenv').config()
+
+const app = express()
 const wordRouter = require('./server/routes/word-route')
 const userRouter = require('./server/routes/user-route')
 
-require('dotenv').config()
-const app = express()
-
-const PORT = process.env.PORT || 8080
 const isProduction = process.env.NODE_ENV === 'production'
 const origin = {
   origin: isProduction ? 'https://wordful.herokuapp.com/' : '*'
@@ -52,9 +51,19 @@ postgrator.migrate('max', (err, migrations) => {
     console.error('Database migration failed!')
     console.error(err)
     process.exit(1)
+  } else {
+    console.log(migrations)
   }
-})
 
-app.listen(PORT, () => {
-  console.log(`Server listening on port: ${process.env.PORT}`)
+  postgrator.endConnection(() => {
+    console.log('Database migrated successfully.')
+
+    /*
+     * Database has been migrated, all is good to go!
+     */
+    const port = process.env.PORT || 8080
+    app.listen(port, () => {
+      console.log(`Server listening at ${port}`)
+    })
+  })
 })
