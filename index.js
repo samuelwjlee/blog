@@ -38,10 +38,10 @@ app.use(bodyParser.json())
  * Migrate database before listening for requests
  */
 postgrator.setConfig({
-  migrationDirectory: './server/migrations',
+  migrationDirectory: __dirname + '/server/migrations',
   driver: 'pg',
   username: process.env.DB_USERNAME,
-  host: process.env.DB_HOST,
+  host: process.env.DATABASE_URL,
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT
