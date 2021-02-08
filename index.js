@@ -46,13 +46,11 @@ postgrator.setConfig({
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT
 })
-postgrator.migrate('max', (err, migrations) => {
+postgrator.migrate('max', err => {
   if (err) {
     console.error('Database migration failed!')
     console.error(err)
     process.exit(1)
-  } else {
-    console.log(migrations)
   }
 
   postgrator.endConnection(() => {
