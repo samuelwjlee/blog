@@ -1,6 +1,6 @@
 const express = require('express')
 const path = require('path')
-const postgrator = require('postgrator')
+// const postgrator = require('postgrator')
 const bodyParser = require('body-parser')
 const compression = require('compression')
 const helmet = require('helmet')
@@ -37,30 +37,35 @@ app.use(bodyParser.json())
 /*
  * Migrate database before listening for requests
  */
-postgrator.setConfig({
-  migrationDirectory: __dirname + '/server/migrations',
-  driver: 'pg',
-  username: process.env.DB_USERNAME,
-  host: process.env.DATABASE_URL,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT
-})
-postgrator.migrate('max', err => {
-  if (err) {
-    console.error('Database migration failed!')
-    console.error(err)
-    process.exit(1)
-  }
+// postgrator.setConfig({
+//   migrationDirectory: __dirname + '/server/migrations',
+//   driver: 'pg',
+//   username: process.env.DB_USERNAME,
+//   host: process.env.DATABASE_URL,
+//   database: process.env.DB_NAME,
+//   password: process.env.DB_PASSWORD,
+//   port: process.env.DB_PORT
+// })
+// postgrator.migrate('max', err => {
+//   if (err) {
+//     console.error('Database migration failed!')
+//     console.error(err)
+//     process.exit(1)
+//   }
 
-  postgrator.endConnection(() => {
-    console.log('Database migrated successfully.')
-    /*
-     * Database has been migrated, all is good to go!
-     */
-    const port = process.env.PORT || 8080
-    app.listen(port, () => {
-      console.log(`Server listening at ${port}`)
-    })
-  })
+//   postgrator.endConnection(() => {
+//     console.log('Database migrated successfully.')
+//     /*
+//      * Database has been migrated, all is good to go!
+//      */
+//     const port = process.env.PORT || 8080
+//     app.listen(port, () => {
+//       console.log(`Server listening at ${port}`)
+//     })
+//   })
+// })
+
+const port = process.env.PORT || 8080
+app.listen(port, () => {
+  console.log(`Server listening at ${port}`)
 })
