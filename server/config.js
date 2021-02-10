@@ -2,6 +2,9 @@ const { Pool } = require('pg')
 
 require('dotenv').config()
 
+/**
+ * TODO: add Knex and migration
+ */
 const pool = new Pool({
   user: process.env.DB_USERNAME,
   host: process.env.DATABASE_URL,
